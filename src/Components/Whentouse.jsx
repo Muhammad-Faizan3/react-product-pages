@@ -1,11 +1,12 @@
 import React, { useRef, useLayoutEffect } from "react";
 import { ScrollReveal, WaveText } from "../hooks/useInView";
+import { useTheme } from '../App';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const VibrationIcon = () => (
+const VibrationIcon = ({ dark }) => (
   <svg
     width="26"
     height="26"
@@ -15,7 +16,7 @@ const VibrationIcon = () => (
   >
     <path
       d="M1 13h3l2-8 3 16 3-16 3 16 3-16 2 8h3"
-      stroke="black"
+      stroke={dark ? 'white' : 'black'}
       strokeWidth="1.4"
       strokeLinejoin="round"
       strokeLinecap="round"
@@ -23,7 +24,7 @@ const VibrationIcon = () => (
   </svg>
 );
 
-const TorqueSpikeIcon = () => (
+const TorqueSpikeIcon = ({ dark }) => (
   <svg
     width="26"
     height="26"
@@ -33,7 +34,7 @@ const TorqueSpikeIcon = () => (
   >
     <path
       d="M1 20L7 8l3 6 4-11 4 14 3-6 3 4"
-      stroke="black"
+      stroke={dark ? 'white' : 'black'}
       strokeWidth="1.4"
       strokeLinejoin="round"
       strokeLinecap="round"
@@ -41,7 +42,7 @@ const TorqueSpikeIcon = () => (
   </svg>
 );
 
-const ShieldIcon = () => (
+const ShieldIcon = ({ dark }) => (
   <svg
     width="24"
     height="26"
@@ -51,13 +52,13 @@ const ShieldIcon = () => (
   >
     <path
       d="M12 1l10 4v7c0 6-4.5 10.5-10 12C6.5 22.5 2 18 2 12V5l10-4z"
-      stroke="black"
+      stroke={dark ? 'white' : 'black'}
       strokeWidth="1.4"
       strokeLinejoin="round"
     />
     <path
       d="M8 12.5l2.7 2.7L17 9"
-      stroke="black"
+      stroke={dark ? 'white' : 'black'}
       strokeWidth="1.4"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -65,7 +66,7 @@ const ShieldIcon = () => (
   </svg>
 );
 
-const DrillBitIcon = () => (
+const DrillBitIcon = ({ dark }) => (
   <svg
     width="26"
     height="26"
@@ -73,14 +74,14 @@ const DrillBitIcon = () => (
     fill="none"
     className="anim anim-line-draw transition-transform duration-500 group-hover:scale-125 group-hover:rotate-90"
   >
-    <circle cx="13" cy="13" r="10.5" stroke="black" strokeWidth="1.4" />
+    <circle cx="13" cy="13" r="10.5" stroke={dark ? 'white' : 'black'} strokeWidth="1.4" />
     <path
       d="M13 2.5v21M2.5 13h21M5.6 5.6l14.8 14.8M20.4 5.6L5.6 20.4"
-      stroke="black"
+      stroke={dark ? 'white' : 'black'}
       strokeWidth="1"
       opacity="0.5"
     />
-    <circle cx="13" cy="13" r="2.6" fill="black" />
+    <circle cx="13" cy="13" r="2.6" fill={dark ? 'white' : 'black'} />
   </svg>
 );
 
@@ -108,6 +109,7 @@ const ITEMS = [
 ];
 
 export default function WhenToUse() {
+  const { dark } = useTheme();
   const rowsRef = useRef([]);
   const headingRef = useRef(null);
 
@@ -159,13 +161,13 @@ export default function WhenToUse() {
   }, []);
 
   return (
-    <div className="bg-[#f5f5f5] w-full overflow-hidden">
-      <div className="border border-[#e5e5e5] overflow-hidden max-w-[1700px] mx-auto">
+    <div className={`${dark ? 'bg-[#0A0A0A]' : 'bg-[#f5f5f5]'} w-full overflow-hidden`}>
+      <div className={`border ${dark ? 'border-white/10' : 'border-[#e5e5e5]'} overflow-hidden max-w-[1700px] mx-auto`}>
 
         {/* Heading - clip reveal */}
         <ScrollReveal animation="anim-clip-right">
-          <div ref={headingRef} className="px-6 sm:px-10 lg:px-20 pt-10 pb-8 border-b border-[#e5e5e5]">
-            <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight uppercase text-black">
+          <div ref={headingRef} className={`px-6 sm:px-10 lg:px-20 pt-10 pb-8 border-b ${dark ? 'border-white/10' : 'border-[#e5e5e5]'}`}>
+            <h2 className={`text-4xl sm:text-5xl font-extrabold tracking-tight uppercase ${dark ? 'text-white' : 'text-black'}`}>
               <WaveText text="When to use" />
             </h2>
           </div>
@@ -173,7 +175,7 @@ export default function WhenToUse() {
 
         {/* Divider */}
         <div className="px-6 sm:px-10 lg:px-20">
-          <div className="h-[1px] bg-[#e5e5e5] anim anim-divider" />
+          <div className={`h-[1px] ${dark ? 'bg-white/10' : 'bg-[#e5e5e5]'} anim anim-divider`} />
         </div>
 
         {/* Rows */}
@@ -185,30 +187,30 @@ export default function WhenToUse() {
               <ScrollReveal key={item.num} animation={animations[i]} delay={i + 1}>
                 <div
                   ref={(el) => (rowsRef.current[i] = el)}
-                  className={`group flex items-center gap-3 sm:gap-5 px-4 sm:px-6 md:px-10 lg:px-20 py-6 sm:py-8 transition-all duration-500 hover:bg-black/[0.04] hover:pl-8 sm:hover:pl-12 lg:hover:pl-24 ${
-                    i !== ITEMS.length - 1 ? "border-b border-[#e5e5e5]" : ""
-                  }`}
+                  className={`group flex items-center gap-3 sm:gap-5 px-4 sm:px-6 md:px-10 lg:px-20 py-6 sm:py-8 transition-all duration-500 hover:pl-8 sm:hover:pl-12 lg:hover:pl-24 ${
+                    dark ? "hover:bg-white/[0.04]" : "hover:bg-black/[0.04]"
+                  } ${i !== ITEMS.length - 1 ? `border-b ${dark ? 'border-white/10' : 'border-[#e5e5e5]'}` : ""}`}
                 >
                   {/* Pulsing dot */}
                   <span className="anim-pulse-dot shrink-0" />
 
                   {/* Number */}
-                  <span className="text-[11px] tracking-[0.15em] text-gray-500 shrink-0 w-6 transition-colors duration-300 group-hover:text-black">
+                  <span className={`text-[11px] tracking-[0.15em] text-gray-500 shrink-0 w-6 transition-colors duration-300 ${dark ? 'group-hover:text-white' : 'group-hover:text-black'}`}>
                     {item.num}
                   </span>
 
                   {/* Icon with bounce */}
-                  <span className="shrink-0 text-black transition-transform duration-500 group-hover:scale-125 group-hover:-translate-y-1">
-                    <Icon />
+                  <span className={`shrink-0 ${dark ? 'text-white' : 'text-black'} transition-transform duration-500 group-hover:scale-125 group-hover:-translate-y-1`}>
+                    <Icon dark={dark} />
                   </span>
 
                   {/* Text */}
-                  <span className="text-sm sm:text-base md:text-lg uppercase tracking-tight text-black transition-all duration-300 group-hover:tracking-[0.05em] min-w-0 flex-1">
+                  <span className={`text-sm sm:text-base md:text-lg uppercase tracking-tight ${dark ? 'text-white' : 'text-black'} transition-all duration-300 group-hover:tracking-[0.05em] min-w-0 flex-1`}>
                     {item.text}
                   </span>
 
                   {/* Arrow indicator */}
-                  <span className="hidden sm:block ml-auto opacity-0 -translate-x-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0 text-[#000000] shrink-0">
+                  <span className={`hidden sm:block ml-auto opacity-0 -translate-x-4 transition-all duration-500 group-hover:opacity-100 group-hover:translate-x-0 ${dark ? 'text-white' : 'text-[#000000]'} shrink-0`}>
                     <svg width="20" height="12" viewBox="0 0 20 12" fill="none">
                       <path d="M0 6h18M14 1l5 5-5 5" stroke="currentColor" strokeWidth="1.5"/>
                     </svg>

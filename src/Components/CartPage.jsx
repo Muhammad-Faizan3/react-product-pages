@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import gsap from "gsap";
 import { useCart } from "../context/CartContext";
+import { useTheme } from '../App';
 
 const formatPrice = (price) => `PKR ${price.toLocaleString()}`;
 
@@ -29,7 +30,7 @@ const perks = [
   { icon: Lock, label: "Buyer Protection", sub: "Full refund guarantee" },
 ];
 
-function CartItem({ item, index }) {
+function CartItem({ item, index, dark }) {
   const rowRef = useRef(null);
   const { removeItem, updateQuantity } = useCart();
 
@@ -77,11 +78,11 @@ function CartItem({ item, index }) {
   return (
     <div
       ref={rowRef}
-      className="group relative bg-white rounded-2xl p-4 sm:p-5 lg:p-6 border border-gray-100 hover:border-gray-200 hover:shadow-[0_8px_40px_rgba(0,0,0,0.06)] transition-all duration-500"
+      className={`group relative ${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl p-4 sm:p-5 lg:p-6 border ${dark ? 'border-white/8' : 'border-gray-100'} hover:border-gray-200 hover:shadow-[0_8px_40px_rgba(0,0,0,0.06)] transition-all duration-500`}
     >
       <div className="flex gap-4 sm:gap-6 items-start">
         {/* Product Image */}
-        <div className="relative shrink-0 w-20 h-20 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center overflow-hidden border border-gray-100">
+        <div className={`relative shrink-0 w-20 h-20 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-xl bg-gradient-to-br ${dark ? 'from-[#1E1E1E] to-[#2A2A2A]' : 'from-gray-50 to-gray-100'} flex items-center justify-center overflow-hidden border ${dark ? 'border-white/8' : 'border-gray-100'}`}>
           {item.image ? (
             <img
               src={item.image}
@@ -101,11 +102,11 @@ function CartItem({ item, index }) {
               <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.15em] text-gray-400">
                 {item.category}
               </span>
-              <h3 className="mt-0.5 text-sm sm:text-base lg:text-lg font-semibold text-gray-900 truncate">
+              <h3 className={`mt-0.5 text-sm sm:text-base lg:text-lg font-semibold ${dark ? 'text-white' : 'text-gray-900'} truncate`}>
                 {item.name}
               </h3>
               {item.capacity && (
-                <span className="inline-block mt-1 text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 font-medium">
+                <span className={`inline-block mt-1 text-[10px] sm:text-xs px-2 py-0.5 rounded-full ${dark ? 'bg-[#2A2A2A]' : 'bg-gray-100'} text-gray-500 font-medium`}>
                   {item.capacity}
                 </span>
               )}
@@ -113,7 +114,7 @@ function CartItem({ item, index }) {
             {/* Remove Button */}
             <button
               onClick={handleRemove}
-              className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-red-50 transition-all duration-300 cursor-pointer opacity-0 group-hover:opacity-100"
+              className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${dark ? 'text-gray-400' : 'text-gray-300'} hover:text-red-500 hover:bg-red-50 transition-all duration-300 cursor-pointer opacity-0 group-hover:opacity-100`}
               aria-label="Remove item"
             >
               <Trash2 size={15} />
@@ -123,7 +124,7 @@ function CartItem({ item, index }) {
           {/* Price + Quantity Row */}
           <div className="mt-3 sm:mt-4 flex items-center justify-between gap-3">
             {/* Quantity Stepper */}
-            <div className="flex items-center border-2 border-gray-100 rounded-xl overflow-hidden bg-gray-50/50 hover:border-gray-200 transition-colors">
+            <div className={`flex items-center border-2 ${dark ? 'border-white/8' : 'border-gray-100'} rounded-xl overflow-hidden ${dark ? 'bg-[#1E1E1E]/50' : 'bg-gray-50/50'} hover:border-gray-200 transition-colors`}>
               <button
                 id={`qty-${item.key}-dec`}
                 onClick={() => handleQty(-1)}
@@ -131,7 +132,7 @@ function CartItem({ item, index }) {
               >
                 <Minus size={13} />
               </button>
-              <span className="w-7 sm:w-8 text-center text-xs sm:text-sm font-bold text-gray-900 tabular-nums">
+              <span className={`w-7 sm:w-8 text-center text-xs sm:text-sm font-bold ${dark ? 'text-white' : 'text-gray-900'} tabular-nums`}>
                 {item.quantity}
               </span>
               <button
@@ -145,7 +146,7 @@ function CartItem({ item, index }) {
 
             {/* Price */}
             <div className="text-right">
-              <p className="text-sm sm:text-base lg:text-lg font-bold text-gray-900 tabular-nums">
+              <p className={`text-sm sm:text-base lg:text-lg font-bold ${dark ? 'text-white' : 'text-gray-900'} tabular-nums`}>
                 {formatPrice(itemTotal)}
               </p>
               {itemOldTotal > itemTotal && (
@@ -161,7 +162,7 @@ function CartItem({ item, index }) {
       {/* Mobile remove button */}
       <button
         onClick={handleRemove}
-        className="absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center text-gray-300 hover:text-red-500 hover:bg-red-50 transition-all lg:hidden cursor-pointer"
+        className={`absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center ${dark ? 'text-gray-400' : 'text-gray-300'} hover:text-red-500 hover:bg-red-50 transition-all lg:hidden cursor-pointer`}
       >
         <X size={13} />
       </button>
@@ -169,7 +170,7 @@ function CartItem({ item, index }) {
   );
 }
 
-function PromoCode() {
+function PromoCode({ dark }) {
   const [code, setCode] = useState("");
   const [applied, setApplied] = useState(false);
   const [error, setError] = useState(false);
@@ -196,7 +197,7 @@ function PromoCode() {
       <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Promo Code</p>
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <Tag size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
+          <Tag size={14} className={`absolute left-3 top-1/2 -translate-y-1/2 ${dark ? 'text-gray-400' : 'text-gray-300'}`} />
           <input
             ref={inputRef}
             type="text"
@@ -206,10 +207,10 @@ function PromoCode() {
             disabled={applied}
             className={`w-full h-10 pl-9 pr-3 rounded-xl text-sm outline-none transition-all duration-300 ${
               applied
-                ? "bg-green-50 border-2 border-green-200 text-green-600"
+                ? `${dark ? 'bg-green-900/20 border-2 border-green-800 text-green-400' : 'bg-green-50 border-2 border-green-200 text-green-600'}`
                 : error
-                ? "bg-red-50 border-2 border-red-200 text-red-500"
-                : "bg-gray-50 border-2 border-gray-100 text-gray-900 focus:border-black focus:bg-white"
+                ? `${dark ? 'bg-red-900/20 border-2 border-red-800 text-red-400' : 'bg-red-50 border-2 border-red-200 text-red-500'}`
+                : `${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} border-2 ${dark ? 'border-white/8' : 'border-gray-100'} ${dark ? 'text-white' : 'text-gray-900'} focus:border-black ${dark ? 'focus:bg-[#141414]' : 'focus:bg-white'}`
             }`}
           />
         </div>
@@ -238,7 +239,7 @@ function PromoCode() {
   );
 }
 
-function OrderSummary() {
+function OrderSummary({ dark }) {
   const { totalPrice, totalOldPrice, totalItems } = useCart();
   const summaryRef = useRef(null);
   const [checkoutHover, setCheckoutHover] = useState(false);
@@ -266,12 +267,12 @@ function OrderSummary() {
   return (
     <div
       ref={summaryRef}
-      className="relative bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 lg:p-7 overflow-hidden"
+      className={`relative ${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl border ${dark ? 'border-white/8' : 'border-gray-100'} p-5 sm:p-6 lg:p-7 overflow-hidden`}
     >
       {/* Decorative gradient */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-gray-50 to-transparent rounded-bl-full pointer-events-none" />
+      <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${dark ? 'from-[#1E1E1E]' : 'from-gray-50'} to-transparent rounded-bl-full pointer-events-none`} />
 
-      <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">
+      <h2 className={`text-base sm:text-lg font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight`}>
         Order Summary
       </h2>
       <p className="text-xs text-gray-400 mt-0.5">{totalItems} item{totalItems !== 1 ? "s" : ""} in cart</p>
@@ -279,7 +280,7 @@ function OrderSummary() {
       <div className="mt-5 space-y-3">
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Subtotal</span>
-          <span className="font-medium text-gray-900 tabular-nums">{formatPrice(totalPrice)}</span>
+          <span className={`font-medium ${dark ? 'text-white' : 'text-gray-900'} tabular-nums`}>{formatPrice(totalPrice)}</span>
         </div>
         {discount > 0 && (
           <div className="flex justify-between text-sm">
@@ -289,7 +290,7 @@ function OrderSummary() {
         )}
         <div className="flex justify-between text-sm">
           <span className="text-gray-500">Shipping</span>
-          <span className={`font-medium tabular-nums ${shipping === 0 ? "text-green-500" : "text-gray-900"}`}>
+          <span className={`font-medium tabular-nums ${shipping === 0 ? "text-green-500" : dark ? 'text-white' : 'text-gray-900'}`}>
             {shipping === 0 ? "Free" : formatPrice(shipping)}
           </span>
         </div>
@@ -297,20 +298,20 @@ function OrderSummary() {
         {/* Divider */}
         <div className="relative py-1">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-dashed border-gray-200" />
+            <div className={`w-full border-t border-dashed ${dark ? 'border-white/12' : 'border-gray-200'}`} />
           </div>
           <div className="relative flex justify-center">
-            <span className="bg-white px-2 text-[10px] text-gray-300">TOTAL</span>
+            <span className={`${dark ? 'bg-[#141414]' : 'bg-white'} px-2 text-[10px] text-gray-300`}>TOTAL</span>
           </div>
         </div>
 
         <div className="flex justify-between items-baseline">
-          <span className="text-sm font-semibold text-gray-900">Total</span>
-          <span className="text-xl sm:text-2xl font-bold text-gray-900 tabular-nums">{formatPrice(finalTotal)}</span>
+          <span className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>Total</span>
+          <span className={`text-xl sm:text-2xl font-bold ${dark ? 'text-white' : 'text-gray-900'} tabular-nums`}>{formatPrice(finalTotal)}</span>
         </div>
       </div>
 
-      <PromoCode />
+      <PromoCode dark={dark} />
 
       {/* Checkout Button */}
       <Link
@@ -337,11 +338,11 @@ function OrderSummary() {
         <div className="flex items-center gap-1 text-[10px] text-gray-400">
           <Lock size={10} /> SSL
         </div>
-        <div className="w-px h-3 bg-gray-200" />
+        <div className={`w-px h-3 ${dark ? 'bg-white/12' : 'bg-gray-200'}`} />
         <div className="flex items-center gap-1 text-[10px] text-gray-400">
           <ShieldCheck size={10} /> Secure
         </div>
-        <div className="w-px h-3 bg-gray-200" />
+        <div className={`w-px h-3 ${dark ? 'bg-white/12' : 'bg-gray-200'}`} />
         <div className="flex items-center gap-1 text-[10px] text-gray-400">
           <Truck size={10} /> Fast Delivery
         </div>
@@ -350,7 +351,7 @@ function OrderSummary() {
   );
 }
 
-function EmptyCart() {
+function EmptyCart({ dark }) {
   const containerRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -384,13 +385,13 @@ function EmptyCart() {
   return (
     <div ref={containerRef} className="flex flex-col items-center justify-center py-16 sm:py-24 lg:py-32">
       <div className="empty-icon relative mb-6 sm:mb-8">
-        <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center border border-gray-100">
-          <ShoppingBag size={40} className="text-gray-300 sm:w-12 sm:h-12" />
+        <div className={`w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br ${dark ? 'from-[#2A2A2A] to-[#1E1E1E]' : 'from-gray-100 to-gray-50'} flex items-center justify-center border ${dark ? 'border-white/8' : 'border-gray-100'}`}>
+          <ShoppingBag size={40} className={`${dark ? 'text-gray-400' : 'text-gray-300'} sm:w-12 sm:h-12`} />
         </div>
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-16 h-2 bg-gray-100 rounded-full blur-sm" />
+        <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 w-16 h-2 ${dark ? 'bg-[#2A2A2A]' : 'bg-gray-100'} rounded-full blur-sm`} />
       </div>
 
-      <h2 className="empty-title text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 tracking-tight">
+      <h2 className={`empty-title text-xl sm:text-2xl lg:text-3xl font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight`}>
         Your cart is empty
       </h2>
       <p className="empty-desc mt-2 sm:mt-3 text-sm sm:text-base text-gray-400 max-w-sm text-center leading-relaxed px-4">
@@ -410,6 +411,7 @@ function EmptyCart() {
 }
 
 export default function CartPage() {
+  const { dark } = useTheme();
   const { items, clearCart, totalItems } = useCart();
   const pageRef = useRef(null);
   const headerRef = useRef(null);
@@ -449,14 +451,14 @@ export default function CartPage() {
   }, [items.length]);
 
   return (
-    <section ref={pageRef} className="w-full bg-gradient-to-b from-white via-gray-50/50 to-white min-h-screen">
+    <section ref={pageRef} className={`w-full ${dark ? 'bg-[#0A0A0A]' : 'bg-gradient-to-b from-white via-gray-50/50 to-white'} min-h-screen`}>
       <div className="max-w-[1700px] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[120px] py-10 sm:py-12 md:py-16 lg:py-24">
         {/* Header */}
         <div ref={headerRef} className="text-center mb-8 sm:mb-10 lg:mb-14">
-          <span className="inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400 bg-gray-100 px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-5">
+          <span className={`inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400 ${dark ? 'bg-[#2A2A2A]' : 'bg-gray-100'} px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-5`}>
             Your Selection
           </span>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 tracking-tight">
+          <h1 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight`}>
             Shopping Cart
           </h1>
           <p className="mt-2 sm:mt-4 text-sm sm:text-base md:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed px-4">
@@ -468,7 +470,7 @@ export default function CartPage() {
         </div>
 
         {items.length === 0 ? (
-          <EmptyCart />
+          <EmptyCart dark={dark} />
         ) : (
           <>
             {/* Cart Content */}
@@ -478,7 +480,7 @@ export default function CartPage() {
                 {/* Top bar */}
                 <div className="flex items-center justify-between mb-4 sm:mb-5">
                   <p className="text-xs sm:text-sm text-gray-400">
-                    <span className="font-semibold text-gray-700">{totalItems}</span> product{totalItems !== 1 ? "s" : ""}
+                    <span className={`font-semibold ${dark ? 'text-gray-300' : 'text-gray-700'}`}>{totalItems}</span> product{totalItems !== 1 ? "s" : ""}
                   </p>
                   <button
                     onClick={clearCart}
@@ -492,7 +494,7 @@ export default function CartPage() {
                 {/* Items list */}
                 <div className="space-y-3 sm:space-y-4">
                   {items.map((item, i) => (
-                    <CartItem key={item.key} item={item} index={i} />
+                    <CartItem key={item.key} item={item} index={i} dark={dark} />
                   ))}
                 </div>
 
@@ -510,7 +512,7 @@ export default function CartPage() {
 
               {/* Order Summary Sidebar */}
               <div className="lg:sticky lg:top-24">
-                <OrderSummary />
+                <OrderSummary dark={dark} />
               </div>
             </div>
 
@@ -519,12 +521,12 @@ export default function CartPage() {
               {perks.map(({ icon: Icon, label, sub }) => (
                 <div
                   key={label}
-                  className="perk-item text-center p-4 sm:p-5 rounded-2xl bg-white border border-gray-100 hover:border-gray-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-500 group"
+                  className={`perk-item text-center p-4 sm:p-5 rounded-2xl ${dark ? 'bg-[#141414]' : 'bg-white'} border ${dark ? 'border-white/8' : 'border-gray-100'} hover:border-gray-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-500 group`}
                 >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gray-50 group-hover:bg-gray-900 flex items-center justify-center mx-auto transition-all duration-500">
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} group-hover:bg-gray-900 flex items-center justify-center mx-auto transition-all duration-500`}>
                     <Icon size={18} className="text-gray-400 group-hover:text-white transition-colors duration-500 sm:w-5 sm:h-5" />
                   </div>
-                  <p className="mt-3 text-xs sm:text-sm font-semibold text-gray-900">{label}</p>
+                  <p className={`mt-3 text-xs sm:text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>{label}</p>
                   <p className="mt-0.5 text-[10px] sm:text-xs text-gray-400 leading-relaxed">{sub}</p>
                 </div>
               ))}

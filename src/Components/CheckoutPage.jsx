@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import gsap from "gsap";
 import { useCart } from "../context/CartContext";
+import { useTheme } from '../App';
 
 const formatPrice = (price) => `PKR ${price.toLocaleString()}`;
 
@@ -36,6 +37,7 @@ const PAYMENT_METHODS = [
 
 function StepIndicator({ currentStep }) {
   const barRef = useRef(null);
+  const { dark } = useTheme();
 
   useEffect(() => {
     if (!barRef.current) return;
@@ -48,7 +50,7 @@ function StepIndicator({ currentStep }) {
 
   return (
     <div className="relative flex items-center justify-between max-w-md mx-auto mb-10 sm:mb-14">
-      <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-100" />
+      <div className={`absolute top-5 left-0 right-0 h-0.5 ${dark ? 'bg-[#2A2A2A]' : 'bg-gray-100'}`} />
       <div ref={barRef} className="absolute top-5 left-0 h-0.5 bg-gray-900" style={{ width: "0%" }} />
       {STEPS.map((step, i) => {
         const Icon = step.icon;
@@ -58,12 +60,12 @@ function StepIndicator({ currentStep }) {
           <div key={step.label} className="relative z-10 flex flex-col items-center gap-2">
             <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${
               isCurrent ? "bg-gray-900 text-white scale-110 shadow-[0_4px_20px_rgba(0,0,0,0.25)]"
-              : isActive ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-400"
+              : isActive ? "bg-gray-900 text-white" : `${dark ? 'bg-[#2A2A2A]' : 'bg-gray-100'} text-gray-400`
             }`}>
               <Icon size={16} />
             </div>
             <span className={`text-[10px] sm:text-xs font-semibold tracking-wide transition-colors duration-500 ${
-              isCurrent ? "text-gray-900" : isActive ? "text-gray-600" : "text-gray-300"
+              isCurrent ? `${dark ? 'text-white' : 'text-gray-900'}` : isActive ? "text-gray-600" : "text-gray-300"
             }`}>{step.label}</span>
           </div>
         );
@@ -74,6 +76,7 @@ function StepIndicator({ currentStep }) {
 
 function ShippingForm({ data, onChange, errors }) {
   const formRef = useRef(null);
+  const { dark } = useTheme();
 
   useLayoutEffect(() => {
     if (!formRef.current) return;
@@ -104,7 +107,7 @@ function ShippingForm({ data, onChange, errors }) {
             <div key={f.name} className={`form-field ${f.col ? "" : "sm:col-span-2"} ${f.half ? "sm:col-span-1" : ""}`}>
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">{f.label}</label>
               <div className="relative">
-                <Icon size={15} className={`absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${hasError ? "text-red-400" : "text-gray-300"}`} />
+                <Icon size={15} className={`absolute left-3.5 top-1/2 -translate-y-1/2 transition-colors duration-300 ${hasError ? "text-red-400" : `${dark ? 'text-gray-400' : 'text-gray-300'}`}`} />
                 <input
                   type={f.type}
                   value={data[f.name] || ""}
@@ -113,7 +116,7 @@ function ShippingForm({ data, onChange, errors }) {
                   className={`w-full h-11 sm:h-12 pl-10 pr-4 rounded-xl text-sm outline-none transition-all duration-300 ${
                     hasError
                       ? "bg-red-50 border-2 border-red-200 text-red-600 placeholder-red-300 focus:border-red-400"
-                      : "bg-gray-50 border-2 border-gray-100 text-gray-900 placeholder-gray-300 focus:border-gray-900 focus:bg-white focus:shadow-[0_4px_20px_rgba(0,0,0,0.06)]"
+                      : `${dark ? 'bg-[#1E1E1E] border-2 border-white/8 text-white' : 'bg-gray-50 border-2 border-gray-100 text-gray-900'} placeholder-gray-300 ${dark ? 'focus:border-white focus:bg-[#141414]' : 'focus:border-gray-900 focus:bg-white'} focus:shadow-[0_4px_20px_rgba(0,0,0,0.06)]`
                   }`}
                 />
               </div>
@@ -128,6 +131,7 @@ function ShippingForm({ data, onChange, errors }) {
 
 function PaymentStep({ method, onSelect }) {
   const containerRef = useRef(null);
+  const { dark } = useTheme();
 
   useLayoutEffect(() => {
     if (!containerRef.current) return;
@@ -147,21 +151,21 @@ function PaymentStep({ method, onSelect }) {
         return (
           <button key={pm.id} onClick={() => onSelect(pm.id)}
             className={`payment-card w-full flex items-center gap-4 p-4 sm:p-5 rounded-2xl border-2 text-left transition-all duration-500 cursor-pointer ${
-              selected ? "border-gray-900 bg-gray-900/5 shadow-[0_8px_30px_rgba(0,0,0,0.08)] scale-[1.01]"
-              : "border-gray-100 bg-white hover:border-gray-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)]"
+              selected ? `${dark ? 'border-white bg-white/5' : 'border-gray-900 bg-gray-900/5'} shadow-[0_8px_30px_rgba(0,0,0,0.08)] scale-[1.01]`
+              : `${dark ? 'border-white/8 bg-[#141414]' : 'border-gray-100 bg-white'} hover:${dark ? 'border-white/12' : 'border-gray-200'} hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)]`
             }`}
           >
             <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-all duration-500 ${
-              selected ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-400"
+              selected ? "bg-gray-900 text-white" : `${dark ? 'bg-[#2A2A2A] text-gray-400' : 'bg-gray-100 text-gray-400'}`
             }`}>
               <Icon size={18} />
             </div>
             <div className="flex-1">
-              <p className={`text-sm font-semibold transition-colors ${selected ? "text-gray-900" : "text-gray-700"}`}>{pm.label}</p>
+              <p className={`text-sm font-semibold transition-colors ${selected ? `${dark ? 'text-white' : 'text-gray-900'}` : `${dark ? 'text-gray-300' : 'text-gray-700'}`}`}>{pm.label}</p>
               <p className="text-xs text-gray-400 mt-0.5">{pm.sub}</p>
             </div>
             <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-all duration-300 ${
-              selected ? "border-gray-900 bg-gray-900" : "border-gray-200"
+              selected ? `border-gray-900 bg-gray-900` : `${dark ? 'border-white/12' : 'border-gray-200'}`
             }`}>
               {selected && <Check size={10} className="text-white" />}
             </div>
@@ -176,6 +180,7 @@ function PaymentStep({ method, onSelect }) {
 function CardForm() {
   const ref = useRef(null);
   const [cardData, setCardData] = useState({ number: "", expiry: "", cvv: "", name: "" });
+  const { dark } = useTheme();
 
   useLayoutEffect(() => {
     if (!ref.current) return;
@@ -198,10 +203,10 @@ function CardForm() {
         <div>
           <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Card Number</label>
           <div className="relative">
-            <CreditCard size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300" />
+            <CreditCard size={15} className={`absolute left-3.5 top-1/2 -translate-y-1/2 ${dark ? 'text-gray-400' : 'text-gray-300'}`} />
             <input type="text" value={cardData.number} onChange={(e) => setCardData({ ...cardData, number: formatCardNumber(e.target.value) })}
               placeholder="4242 4242 4242 4242"
-              className="w-full h-11 pl-10 pr-4 rounded-xl text-sm bg-gray-50 border-2 border-gray-100 text-gray-900 placeholder-gray-300 outline-none transition-all duration-300 focus:border-gray-900 focus:bg-white tabular-nums" />
+                className={`w-full h-11 pl-10 pr-4 rounded-xl text-sm ${dark ? 'bg-[#1E1E1E] border-2 border-white/8 text-white' : 'bg-gray-50 border-2 border-gray-100 text-gray-900'} placeholder-gray-300 outline-none transition-all duration-300 ${dark ? 'focus:border-white focus:bg-[#141414]' : 'focus:border-gray-900 focus:bg-white'} tabular-nums`} />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-3">
@@ -209,15 +214,15 @@ function CardForm() {
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Expiry</label>
             <input type="text" value={cardData.expiry} onChange={(e) => setCardData({ ...cardData, expiry: formatExpiry(e.target.value) })}
               placeholder="MM/YY"
-              className="w-full h-11 px-4 rounded-xl text-sm bg-gray-50 border-2 border-gray-100 text-gray-900 placeholder-gray-300 outline-none transition-all duration-300 focus:border-gray-900 focus:bg-white tabular-nums" />
+              className={`w-full h-11 px-4 rounded-xl text-sm ${dark ? 'bg-[#1E1E1E] border-2 border-white/8 text-white' : 'bg-gray-50 border-2 border-gray-100 text-gray-900'} placeholder-gray-300 outline-none transition-all duration-300 ${dark ? 'focus:border-white focus:bg-[#141414]' : 'focus:border-gray-900 focus:bg-white'} tabular-nums`} />
           </div>
           <div>
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">CVV</label>
             <div className="relative">
-              <Lock size={13} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300" />
+              <Lock size={13} className={`absolute left-3.5 top-1/2 -translate-y-1/2 ${dark ? 'text-gray-400' : 'text-gray-300'}`} />
               <input type="text" value={cardData.cvv} onChange={(e) => setCardData({ ...cardData, cvv: e.target.value.replace(/\D/g, "").slice(0, 4) })}
                 placeholder="123"
-                className="w-full h-11 pl-10 pr-4 rounded-xl text-sm bg-gray-50 border-2 border-gray-100 text-gray-900 placeholder-gray-300 outline-none transition-all duration-300 focus:border-gray-900 focus:bg-white tabular-nums" />
+              className={`w-full h-11 pl-10 pr-4 rounded-xl text-sm ${dark ? 'bg-[#1E1E1E] border-2 border-white/8 text-white' : 'bg-gray-50 border-2 border-gray-100 text-gray-900'} placeholder-gray-300 outline-none transition-all duration-300 ${dark ? 'focus:border-white focus:bg-[#141414]' : 'focus:border-gray-900 focus:bg-white'} tabular-nums`} />
             </div>
           </div>
         </div>
@@ -225,7 +230,7 @@ function CardForm() {
           <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Cardholder Name</label>
           <input type="text" value={cardData.name} onChange={(e) => setCardData({ ...cardData, name: e.target.value })}
             placeholder="JOHN DOE"
-            className="w-full h-11 px-4 rounded-xl text-sm bg-gray-50 border-2 border-gray-100 text-gray-900 placeholder-gray-300 outline-none transition-all duration-300 focus:border-gray-900 focus:bg-white uppercase" />
+            className={`w-full h-11 px-4 rounded-xl text-sm ${dark ? 'bg-[#1E1E1E] border-2 border-white/8 text-white' : 'bg-gray-50 border-2 border-gray-100 text-gray-900'} placeholder-gray-300 outline-none transition-all duration-300 ${dark ? 'focus:border-white focus:bg-[#141414]' : 'focus:border-gray-900 focus:bg-white'} uppercase`} />
         </div>
       </div>
     </div>
@@ -237,6 +242,7 @@ function ConfirmStep({ shipping, payment, items, totalPrice, totalOldPrice, tota
   const discount = totalOldPrice - totalPrice;
   const shippingCost = totalPrice >= 10000 ? 0 : 500;
   const finalTotal = totalPrice + shippingCost;
+  const { dark } = useTheme();
 
   useLayoutEffect(() => {
     if (!ref.current) return;
@@ -245,33 +251,33 @@ function ConfirmStep({ shipping, payment, items, totalPrice, totalOldPrice, tota
   }, []);
 
   return (
-    <div ref={ref} className="space-y-5">
-      <div className="confirm-block bg-gray-50 rounded-2xl p-4 sm:p-5">
+      <div ref={ref} className="space-y-5">
+      <div className={`confirm-block ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} rounded-2xl p-4 sm:p-5`}>
         <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
           <PackageOpen size={13} /> Order Items ({totalItems})
         </h3>
         <div className="space-y-2.5">
           {items.map((item) => (
             <div key={item.key} className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-white border border-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
+              <div className={`w-10 h-10 rounded-lg ${dark ? 'bg-[#141414] border-white/8' : 'bg-white border-gray-100'} border flex items-center justify-center shrink-0 overflow-hidden`}>
                 {item.image ? <img src={item.image} alt={item.name} className="w-[80%] h-[80%] object-contain" />
                 : <PackageOpen size={14} className="text-gray-300" />}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold text-gray-900 truncate">{item.name}</p>
+                <p className={`text-xs font-semibold truncate ${dark ? 'text-white' : 'text-gray-900'}`}>{item.name}</p>
                 <p className="text-[10px] text-gray-400">Qty: {item.quantity}{item.capacity ? ` · ${item.capacity}` : ""}</p>
               </div>
-              <p className="text-xs font-bold text-gray-900 tabular-nums">{formatPrice(item.price * item.quantity)}</p>
+              <p className={`text-xs font-bold tabular-nums ${dark ? 'text-white' : 'text-gray-900'}`}>{formatPrice(item.price * item.quantity)}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="confirm-block bg-gray-50 rounded-2xl p-4 sm:p-5">
+      <div className={`confirm-block ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} rounded-2xl p-4 sm:p-5`}>
         <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
           <MapPin size={13} /> Shipping Details
         </h3>
-        <div className="text-sm text-gray-700 space-y-1">
+        <div className={`text-sm space-y-1 ${dark ? 'text-gray-300' : 'text-gray-700'}`}>
           <p className="font-semibold">{shipping.fullName}</p>
           <p className="text-gray-500">{shipping.address}</p>
           <p className="text-gray-500">{shipping.city}, {shipping.province} {shipping.postalCode}</p>
@@ -280,21 +286,21 @@ function ConfirmStep({ shipping, payment, items, totalPrice, totalOldPrice, tota
         </div>
       </div>
 
-      <div className="confirm-block bg-gray-50 rounded-2xl p-4 sm:p-5">
+      <div className={`confirm-block ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} rounded-2xl p-4 sm:p-5`}>
         <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
           <CreditCard size={13} /> Payment Method
         </h3>
-        <p className="text-sm font-semibold text-gray-900">
+        <p className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>
           {PAYMENT_METHODS.find((m) => m.id === payment)?.label || "Not selected"}
         </p>
       </div>
 
-      <div className="confirm-block bg-gray-50 rounded-2xl p-4 sm:p-5">
+      <div className={`confirm-block ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} rounded-2xl p-4 sm:p-5`}>
         <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Price Breakdown</h3>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
             <span className="text-gray-500">Subtotal</span>
-            <span className="font-medium text-gray-900 tabular-nums">{formatPrice(totalPrice)}</span>
+            <span className={`font-medium tabular-nums ${dark ? 'text-white' : 'text-gray-900'}`}>{formatPrice(totalPrice)}</span>
           </div>
           {discount > 0 && (
             <div className="flex justify-between">
@@ -308,9 +314,9 @@ function ConfirmStep({ shipping, payment, items, totalPrice, totalOldPrice, tota
               {shippingCost === 0 ? "Free" : formatPrice(shippingCost)}
             </span>
           </div>
-          <div className="border-t border-gray-200 pt-2 flex justify-between">
-            <span className="font-bold text-gray-900">Total</span>
-            <span className="text-lg font-bold text-gray-900 tabular-nums">{formatPrice(finalTotal)}</span>
+          <div className={`border-t pt-2 flex justify-between ${dark ? 'border-white/12' : 'border-gray-200'}`}>
+            <span className={`font-bold ${dark ? 'text-white' : 'text-gray-900'}`}>Total</span>
+            <span className={`text-lg font-bold tabular-nums ${dark ? 'text-white' : 'text-gray-900'}`}>{formatPrice(finalTotal)}</span>
           </div>
         </div>
       </div>
@@ -327,6 +333,7 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState({});
   const [placing, setPlacing] = useState(false);
   const orderPlacedRef = useRef(false);
+  const { dark } = useTheme();
 
   const pageRef = useRef(null);
   const headerRef = useRef(null);
@@ -432,23 +439,23 @@ export default function CheckoutPage() {
   };
 
   return (
-    <section ref={pageRef} className="w-full bg-gradient-to-b from-white via-gray-50/50 to-white min-h-screen">
+    <section ref={pageRef} className={`w-full min-h-screen ${dark ? 'bg-[#0A0A0A]' : 'bg-gradient-to-b from-white via-gray-50/50 to-white'}`}>
       <div className="max-w-[1700px] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[120px] py-10 sm:py-12 md:py-16 lg:py-24">
         <div ref={headerRef} className="text-center mb-6 sm:mb-8">
-          <span className="inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400 bg-gray-100 px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-5">
+          <span className={`inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400 px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-5 ${dark ? 'bg-[#2A2A2A]' : 'bg-gray-100'}`}>
             Secure Checkout
           </span>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight">Checkout</h1>
+          <h1 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight ${dark ? 'text-white' : 'text-gray-900'}`}>Checkout</h1>
           <div className="mt-4 sm:mt-6 w-12 sm:w-16 h-[2px] bg-black mx-auto rounded-full" />
         </div>
 
         <StepIndicator currentStep={step} />
 
         <div ref={contentRef} className="grid grid-cols-1 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px] gap-6 lg:gap-8 xl:gap-10 items-start">
-          <div className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-7 lg:p-8">
+          <div className={`${dark ? 'bg-[#141414] border-white/8' : 'bg-white border-gray-100'} rounded-2xl border p-5 sm:p-7 lg:p-8`}>
             {step === 0 && (
               <div>
-                <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
+                <h2 className={`text-base sm:text-lg font-bold tracking-tight flex items-center gap-2 ${dark ? 'text-white' : 'text-gray-900'}`}>
                   <Truck size={18} className="text-gray-400" /> Shipping Information
                 </h2>
                 <p className="mt-1 text-xs text-gray-400">Where should we deliver your order?</p>
@@ -457,7 +464,7 @@ export default function CheckoutPage() {
             )}
             {step === 1 && (
               <div>
-                <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
+                <h2 className={`text-base sm:text-lg font-bold tracking-tight flex items-center gap-2 ${dark ? 'text-white' : 'text-gray-900'}`}>
                   <CreditCard size={18} className="text-gray-400" /> Payment Method
                 </h2>
                 <p className="mt-1 text-xs text-gray-400">How would you like to pay?</p>
@@ -466,7 +473,7 @@ export default function CheckoutPage() {
             )}
             {step === 2 && (
               <div>
-                <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
+                <h2 className={`text-base sm:text-lg font-bold tracking-tight flex items-center gap-2 ${dark ? 'text-white' : 'text-gray-900'}`}>
                   <Check size={18} className="text-gray-400" /> Review & Confirm
                 </h2>
                 <p className="mt-1 text-xs text-gray-400">Please review your order before placing</p>
@@ -506,29 +513,29 @@ export default function CheckoutPage() {
           </div>
 
           <div className="lg:sticky lg:top-24">
-            <div className="relative bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 lg:p-7 overflow-hidden">
+            <div className={`relative ${dark ? 'bg-[#141414] border-white/8' : 'bg-white border-gray-100'} rounded-2xl border p-5 sm:p-6 lg:p-7 overflow-hidden`}>
               <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-gray-50 to-transparent rounded-bl-full pointer-events-none" />
-              <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight">Your Order</h2>
+              <h2 className={`text-base sm:text-lg font-bold tracking-tight ${dark ? 'text-white' : 'text-gray-900'}`}>Your Order</h2>
               <p className="text-xs text-gray-400 mt-0.5">{totalItems} item{totalItems !== 1 ? "s" : ""}</p>
               <div className="mt-4 space-y-2.5 max-h-48 overflow-y-auto pr-1">
                 {items.map((item) => (
                   <div key={item.key} className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 overflow-hidden">
+                    <div className={`w-10 h-10 rounded-lg ${dark ? 'bg-[#1E1E1E] border-white/8' : 'bg-gray-50 border-gray-100'} border flex items-center justify-center shrink-0 overflow-hidden`}>
                       {item.image ? <img src={item.image} alt={item.name} className="w-[80%] h-[80%] object-contain" />
                       : <PackageOpen size={14} className="text-gray-300" />}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold text-gray-900 truncate">{item.name}</p>
+                      <p className={`text-xs font-semibold truncate ${dark ? 'text-white' : 'text-gray-900'}`}>{item.name}</p>
                       <p className="text-[10px] text-gray-400">×{item.quantity}</p>
                     </div>
-                    <p className="text-xs font-bold text-gray-900 tabular-nums">{formatPrice(item.price * item.quantity)}</p>
+                    <p className={`text-xs font-bold tabular-nums ${dark ? 'text-white' : 'text-gray-900'}`}>{formatPrice(item.price * item.quantity)}</p>
                   </div>
                 ))}
               </div>
-              <div className="mt-4 pt-4 border-t border-gray-100 space-y-2">
+              <div className={`mt-4 pt-4 space-y-2 ${dark ? 'border-t border-white/8' : 'border-t border-gray-100'}`}>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Subtotal</span>
-                  <span className="font-medium text-gray-900 tabular-nums">{formatPrice(totalPrice)}</span>
+                  <span className={`font-medium tabular-nums ${dark ? 'text-white' : 'text-gray-900'}`}>{formatPrice(totalPrice)}</span>
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between text-sm">
@@ -538,13 +545,13 @@ export default function CheckoutPage() {
                 )}
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-500">Shipping</span>
-                  <span className={`font-medium tabular-nums ${shippingCost === 0 ? "text-green-500" : "text-gray-900"}`}>
+                  <span className={`font-medium tabular-nums ${shippingCost === 0 ? "text-green-500" : `${dark ? 'text-white' : 'text-gray-900'}`}`}>
                     {shippingCost === 0 ? "Free" : formatPrice(shippingCost)}
                   </span>
                 </div>
-                <div className="border-t border-dashed border-gray-200 pt-2 flex justify-between items-baseline">
-                  <span className="text-sm font-bold text-gray-900">Total</span>
-                  <span className="text-xl sm:text-2xl font-bold text-gray-900 tabular-nums">{formatPrice(finalTotal)}</span>
+                <div className={`border-t border-dashed pt-2 flex justify-between items-baseline ${dark ? 'border-white/12' : 'border-gray-200'}`}>
+                  <span className={`text-sm font-bold ${dark ? 'text-white' : 'text-gray-900'}`}>Total</span>
+                  <span className={`text-xl sm:text-2xl font-bold tabular-nums ${dark ? 'text-white' : 'text-gray-900'}`}>{formatPrice(finalTotal)}</span>
                 </div>
               </div>
               <div className="mt-5 flex items-center justify-center gap-4">

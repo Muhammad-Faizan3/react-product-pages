@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { useTheme } from '../App';
 
 export default function CustomCursor() {
   const dotRef = useRef(null);
@@ -9,6 +10,7 @@ export default function CustomCursor() {
   const [hovering, setHovering] = useState(false);
   const [clicking, setClicking] = useState(false);
   const [visible, setVisible] = useState(false);
+  const { dark } = useTheme();
 
   useEffect(() => {
     const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -59,12 +61,12 @@ export default function CustomCursor() {
       document.querySelectorAll("button, a, [role='button'], input, textarea, .tilt-card, .img-zoom").forEach((el) => {
         el.addEventListener("mouseenter", () => {
           setHovering(true);
-          gsap.to(ring, { scale: 1.6, borderColor: "rgba(0, 0, 0, 0.6)", duration: 0.3, ease: "power2.out" });
+          gsap.to(ring, { scale: 1.6, borderColor: dark ? "rgba(255, 255, 255, 0.6)" : "rgba(0, 0, 0, 0.6)", duration: 0.3, ease: "power2.out" });
           gsap.to(glow, { scale: 1.8, opacity: 0.4, duration: 0.4, ease: "power2.out" });
         });
         el.addEventListener("mouseleave", () => {
           setHovering(false);
-          gsap.to(ring, { scale: 1, borderColor: "rgba(0, 0, 0, 0.4)", duration: 0.3, ease: "power2.out" });
+          gsap.to(ring, { scale: 1, borderColor: dark ? "rgba(255, 255, 255, 0.4)" : "rgba(0, 0, 0, 0.4)", duration: 0.3, ease: "power2.out" });
           gsap.to(glow, { scale: 1, opacity: 0.15, duration: 0.4, ease: "power2.out" });
         });
       });
@@ -89,7 +91,7 @@ export default function CustomCursor() {
       document.removeEventListener("mouseup", onMouseUp);
       mutObs.disconnect();
     };
-  }, [hovering, visible]);
+  }, [hovering, visible, dark]);
 
   // Don't render on touch devices
   if (typeof window !== "undefined" && "ontouchstart" in window) return null;
@@ -104,7 +106,7 @@ export default function CustomCursor() {
           width: 6,
           height: 6,
           borderRadius: "50%",
-          background: "#000000",
+          background: dark ? '#F5F5F5' : '#000000',
           transform: "translate(-50%, -50%)",
           opacity: visible ? 1 : 0,
           transition: "opacity 0.3s ease",
@@ -119,7 +121,7 @@ export default function CustomCursor() {
           width: 36,
           height: 36,
           borderRadius: "50%",
-          border: "1.5px solid rgba(0, 0, 0, 0.5)",
+          border: `1.5px solid ${dark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)'}`,
           transform: "translate(-50%, -50%)",
           opacity: visible ? 1 : 0,
           transition: "opacity 0.3s ease",
@@ -134,7 +136,7 @@ export default function CustomCursor() {
           width: 80,
           height: 80,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(0, 0, 0, 0.15) 0%, transparent 70%)",
+          background: `radial-gradient(circle, ${dark ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)'} 0%, transparent 70%)`,
           transform: "translate(-50%, -50%)",
           opacity: visible ? 0.15 : 0,
           transition: "opacity 0.5s ease",

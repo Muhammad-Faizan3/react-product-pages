@@ -650,6 +650,84 @@ button, a, [role="button"], input[type="submit"], input[type="button"] {
   --lines: #2a2a30;
 }
 
+/* ============================================
+   DARK MODE GLOBAL OVERRIDES
+   ============================================ */
+
+.dark body {
+  background-color: #0A0A0A;
+  color: #F5F5F5;
+}
+
+/* --- Background overrides --- */
+.dark .bg-white { background-color: #0A0A0A !important; }
+.dark .bg-gray-50 { background-color: #141414 !important; }
+.dark .bg-gray-100 { background-color: #1E1E1E !important; }
+.dark .bg-gray-200 { background-color: #2A2A2A !important; }
+.dark .bg-gray-50\/30 { background-color: rgba(20,20,20,0.3) !important; }
+.dark .bg-gray-50\/50 { background-color: rgba(20,20,20,0.5) !important; }
+.dark .bg-gray-50\/80 { background-color: rgba(20,20,20,0.8) !important; }
+.dark .bg-gray-50\/70 { background-color: rgba(20,20,20,0.7) !important; }
+.dark .bg-gray-100\/40 { background-color: rgba(30,30,30,0.4) !important; }
+.dark .bg-gray-100\/50 { background-color: rgba(30,30,30,0.5) !important; }
+
+/* --- Gradient overrides --- */
+.dark .from-white { --tw-gradient-from: #0A0A0A !important; }
+.dark .via-gray-50\/50 { --tw-gradient-via: rgba(20,20,20,0.5) !important; }
+.dark .via-gray-50\/30 { --tw-gradient-via: rgba(20,20,20,0.3) !important; }
+.dark .to-white { --tw-gradient-to: #0A0A0A !important; }
+.dark .from-gray-50 { --tw-gradient-from: #141414 !important; }
+.dark .to-gray-100\/50 { --tw-gradient-to: rgba(30,30,30,0.5) !important; }
+.dark .to-gray-100 { --tw-gradient-to: #1E1E1E !important; }
+
+/* --- Text color overrides --- */
+.dark .text-gray-900 { color: #F5F5F5 !important; }
+.dark .text-gray-700 { color: #D1D5DB !important; }
+.dark .text-gray-600 { color: #9CA3AF !important; }
+.dark .text-gray-500 { color: #6B7280 !important; }
+.dark .text-gray-400 { color: #6B7280 !important; }
+.dark .text-gray-300 { color: #4B5563 !important; }
+.dark .text-black { color: #F5F5F5 !important; }
+
+/* --- Border color overrides --- */
+.dark .border-gray-100 { border-color: rgba(255,255,255,0.08) !important; }
+.dark .border-gray-200 { border-color: rgba(255,255,255,0.12) !important; }
+.dark .border-gray-300 { border-color: rgba(255,255,255,0.15) !important; }
+.dark .border-gray-200\/80 { border-color: rgba(255,255,255,0.1) !important; }
+.dark .border-black { border-color: rgba(255,255,255,0.2) !important; }
+.dark .border-black\/5 { border-color: rgba(255,255,255,0.05) !important; }
+
+/* --- Button dark mode overrides --- */
+.dark .bg-black { background-color: #F5F5F5 !important; }
+.dark .bg-black\/40 { background-color: rgba(0,0,0,0.6) !important; }
+.dark .bg-black\/80 { background-color: rgba(0,0,0,0.85) !important; }
+.dark .bg-black\/25 { background-color: rgba(0,0,0,0.5) !important; }
+.dark .from-gray-900 { --tw-gradient-from: #F5F5F5 !important; }
+.dark .to-black { --tw-gradient-to: #0A0A0A !important; }
+.dark .from-gray-900.to-black { --tw-gradient-from: #F5F5F5 !important; --tw-gradient-to: #D1D5DB !important; }
+.dark .hover\:bg-black:hover { background-color: #D1D5DB !important; }
+.dark .hover\:bg-gray-900:hover { background-color: #D1D5DB !important; }
+.dark .group-hover\:bg-gray-900 { background-color: #F5F5F5 !important; }
+
+/* --- Ring overrides --- */
+.dark .ring-gray-200 { --tw-ring-color: rgba(255,255,255,0.1) !important; }
+.dark .ring-inset { --tw-ring-inset: inset; }
+
+/* --- Shadow overrides --- */
+.dark .shadow-\[0_10px_40px_rgba\(0\,0\,0\,0\.08\)\] { box-shadow: 0 10px 40px rgba(0,0,0,0.3) !important; }
+.dark .shadow-\[0_4px_15px_rgba\(0\,0\,0\,0\.15\)\] { box-shadow: 0 4px 15px rgba(0,0,0,0.4) !important; }
+
+/* --- Selection color --- */
+.dark ::selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: #F5F5F5;
+}
+
+/* --- Scrollbar dark --- */
+.dark ::-webkit-scrollbar-track { background: #0A0A0A; }
+.dark ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+.dark ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+
 html.lenis,
 html.lenis body {
   height: auto;
@@ -676,6 +754,11 @@ body {
 ::selection {
   background: rgba(0, 0, 0, 0.2);
   color: #111;
+}
+
+.dark ::selection {
+  background: rgba(255, 255, 255, 0.2);
+  color: #F5F5F5;
 }
 
 ::-webkit-scrollbar { width: 6px; }

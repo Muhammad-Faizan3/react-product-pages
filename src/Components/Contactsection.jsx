@@ -4,6 +4,7 @@ import { ScrollReveal, WaveText } from "../hooks/useInView";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import img5 from "../assets/product.png";
+import { useTheme } from '../App';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -11,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function ContactSection() {
   const formRef = useRef(null);
   const inputRefs = useRef([]);
+  const { dark } = useTheme();
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -37,17 +39,17 @@ export default function ContactSection() {
   }, []);
 
   return (
-    <section className="bg-gray-50 text-gray-900 py-12 sm:py-16 lg:py-24">
-      <div className="max-w-[1400px] mx-auto border border-gray-200 overflow-hidden">
+    <section className={`${dark ? 'bg-[#0A0A0A]' : 'bg-gray-50'} ${dark ? 'text-white' : 'text-gray-900'} py-12 sm:py-16 lg:py-24`}>
+        <div className={`max-w-[1400px] mx-auto border ${dark ? 'border-white/10' : 'border-gray-200'} overflow-hidden`}>
 
         {/* Top divider */}
-        <div className="h-[1px] bg-[#2b2b2b] anim anim-divider" />
+        <div className={`h-[1px] ${dark ? 'bg-white/20' : 'bg-[#2b2b2b]'} anim anim-divider`} />
 
         <div className="grid lg:grid-cols-2">
 
           {/* LEFT - Image */}
           <ScrollReveal animation="anim-flip-x">
-            <div className="border-r border-gray-200 flex justify-center items-center p-6 sm:p-10 lg:p-20">
+              <div className={`border-r ${dark ? 'border-white/10' : 'border-gray-200'} flex justify-center items-center p-6 sm:p-10 lg:p-20`}>
               <div className="relative w-full max-w-[420px] aspect-[3/4] overflow-hidden rounded-sm group">
                 {/* Decorative corner brackets */}
                 <div className="absolute top-3 left-3 w-8 h-8 border-t-2 border-l-2 border-white/20 z-10 anim anim-fade-down delay-2" />
@@ -72,20 +74,20 @@ export default function ContactSection() {
               <div className="w-full max-w-[520px]">
 
                 {/* Eyebrow */}
-                  <p className="uppercase tracking-[4px] text-[11px] text-gray-600 mb-6 anim anim-fade-right delay-1">
+                  <p className={`uppercase tracking-[4px] text-[11px] ${dark ? 'text-gray-400' : 'text-gray-600'} mb-6 anim anim-fade-right delay-1`}>
                   {`{ WE REPLY WITHIN A DAY }`}
                 </p>
 
                 {/* Heading */}
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] leading-[1] font-light uppercase mb-6 text-gray-900">
+                <h2 className={`text-3xl sm:text-4xl md:text-5xl lg:text-[56px] leading-[1] font-light uppercase mb-6 ${dark ? 'text-white' : 'text-gray-900'}`}>
                   <WaveText text="RUN THE NUMBERS ON YOUR WELL" />
                 </h2>
 
                 {/* Accent line */}
-                <div className="w-[60px] h-[2px] bg-[#000000] anim anim-divider delay-3 mb-8" />
+                <div className={`w-[60px] h-[2px] ${dark ? 'bg-white' : 'bg-[#000000]'} anim anim-divider delay-3 mb-8`} />
 
                 {/* Description */}
-                <p className="text-gray-600 text-[14px] sm:text-[15px] leading-7 mb-8 sm:mb-12 anim anim-fade-up delay-4">
+                <p className={`${dark ? 'text-gray-400' : 'text-gray-600'} text-[14px] sm:text-[15px] leading-7 mb-8 sm:mb-12 anim anim-fade-up delay-4`}>
                   Send your well data and concerns. We'll run T&D modelling
                   and come back with a computation and the expected impact.
                 </p>
@@ -98,17 +100,17 @@ export default function ContactSection() {
                       <input
                         type="text"
                         placeholder="Full Name"
-                        className="w-full bg-transparent border-b border-[#d1d5db] pb-3 outline-none placeholder-gray-400 focus:border-[#000000] transition-all duration-500 focus:translate-y-[-2px] focus:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                        className={`w-full bg-transparent border-b ${dark ? 'border-white/20' : 'border-[#d1d5db]'} pb-3 outline-none placeholder-gray-400 focus:border-[#000000] transition-all duration-500 focus:translate-y-[-2px] focus:shadow-[0_4px_12px_rgba(0,0,0,0.1)]`}
                       />
-                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#000000] transition-all duration-500 group-focus-within:w-full" />
+                      <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] ${dark ? 'bg-white' : 'bg-[#000000]'} transition-all duration-500 group-focus-within:w-full`} />
                     </div>
                     <div ref={(el) => (inputRefs.current[1] = el)} className="relative group">
                       <input
                         type="email"
                         placeholder="Email"
-                        className="w-full bg-transparent border-b border-[#d1d5db] pb-3 outline-none placeholder-gray-400 focus:border-[#000000] transition-all duration-500 focus:translate-y-[-2px] focus:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                        className={`w-full bg-transparent border-b ${dark ? 'border-white/20' : 'border-[#d1d5db]'} pb-3 outline-none placeholder-gray-400 focus:border-[#000000] transition-all duration-500 focus:translate-y-[-2px] focus:shadow-[0_4px_12px_rgba(0,0,0,0.1)]`}
                       />
-                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#000000] transition-all duration-500 group-focus-within:w-full" />
+                      <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] ${dark ? 'bg-white' : 'bg-[#000000]'} transition-all duration-500 group-focus-within:w-full`} />
                     </div>
                   </div>
 
@@ -117,17 +119,17 @@ export default function ContactSection() {
                       <input
                         type="text"
                         placeholder="Well"
-                        className="w-full bg-transparent border-b border-[#d1d5db] pb-3 outline-none placeholder-gray-400 focus:border-[#000000] transition-all duration-500 focus:translate-y-[-2px] focus:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                        className={`w-full bg-transparent border-b ${dark ? 'border-white/20' : 'border-[#d1d5db]'} pb-3 outline-none placeholder-gray-400 focus:border-[#000000] transition-all duration-500 focus:translate-y-[-2px] focus:shadow-[0_4px_12px_rgba(0,0,0,0.1)]`}
                       />
-                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#000000] transition-all duration-500 group-focus-within:w-full" />
+                      <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] ${dark ? 'bg-white' : 'bg-[#000000]'} transition-all duration-500 group-focus-within:w-full`} />
                     </div>
                     <div ref={(el) => (inputRefs.current[3] = el)} className="relative group">
                       <input
                         type="text"
                         placeholder="Phone"
-                        className="w-full bg-transparent border-b border-[#d1d5db] pb-3 outline-none placeholder-gray-400 focus:border-[#000000] transition-all duration-500 focus:translate-y-[-2px] focus:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                        className={`w-full bg-transparent border-b ${dark ? 'border-white/20' : 'border-[#d1d5db]'} pb-3 outline-none placeholder-gray-400 focus:border-[#000000] transition-all duration-500 focus:translate-y-[-2px] focus:shadow-[0_4px_12px_rgba(0,0,0,0.1)]`}
                       />
-                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#000000] transition-all duration-500 group-focus-within:w-full" />
+                      <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] ${dark ? 'bg-white' : 'bg-[#000000]'} transition-all duration-500 group-focus-within:w-full`} />
                     </div>
                   </div>
 
@@ -135,15 +137,15 @@ export default function ContactSection() {
                     <textarea
                       rows="3"
                       placeholder="Message"
-                      className="w-full bg-transparent border-b border-[#d1d5db] outline-none resize-none placeholder-gray-400 pb-3 focus:border-[#000000] transition-all duration-500 focus:translate-y-[-2px] focus:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                      className={`w-full bg-transparent border-b ${dark ? 'border-white/20' : 'border-[#d1d5db]'} outline-none resize-none placeholder-gray-400 pb-3 focus:border-[#000000] transition-all duration-500 focus:translate-y-[-2px] focus:shadow-[0_4px_12px_rgba(0,0,0,0.1)]`}
                     />
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#000000] transition-all duration-500 group-focus-within:w-full" />
+                    <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] ${dark ? 'bg-white' : 'bg-[#000000]'} transition-all duration-500 group-focus-within:w-full`} />
                   </div>
 
-                  <label ref={(el) => (inputRefs.current[5] = el)} className="flex items-start gap-3 text-[12px] leading-6 text-gray-600 cursor-pointer hover:text-gray-700 transition-colors duration-300">
+                  <label ref={(el) => (inputRefs.current[5] = el)} className={`flex items-start gap-3 text-[12px] leading-6 ${dark ? 'text-gray-400' : 'text-gray-600'} cursor-pointer ${dark ? 'hover:text-gray-300' : 'hover:text-gray-700'} transition-colors duration-300`}>
                     <input
                       type="checkbox"
-                      className="mt-1 accent-[#000000] scale-110"
+                      className={`mt-1 ${dark ? 'accent-white' : 'accent-[#000000]'} scale-110`}
                     />
                     <span>
                       I consent to the processing of my personal data
@@ -185,7 +187,7 @@ export default function ContactSection() {
         </div>
 
         {/* Bottom accent */}
-        <div className="h-[1px] bg-[#2b2b2b] anim anim-divider delay-2" />
+        <div className={`h-[1px] ${dark ? 'bg-white/20' : 'bg-[#2b2b2b]'} anim anim-divider delay-2`} />
       </div>
     </section>
   );

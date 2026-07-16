@@ -20,6 +20,7 @@ import {
   Gift,
 } from "lucide-react";
 import gsap from "gsap";
+import { useTheme } from '../App';
 
 const TIMELINE = [
   { icon: Check, label: "Order Confirmed", sub: "Just now", active: true },
@@ -69,7 +70,9 @@ function Confetti() {
     });
   }, []);
 
-  const colors = ["#111", "#333", "#555", "#888", "#aaa", "#d1d5db", "#e5e7eb"];
+  const colors = dark
+    ? ["#fff", "#ddd", "#bbb", "#999", "#ccc", "#eee", "#f5f5f5"]
+    : ["#111", "#333", "#555", "#888", "#aaa", "#d1d5db", "#e5e7eb"];
 
   return (
     <div ref={containerRef} className="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -126,6 +129,7 @@ function PulseRings() {
 }
 
 function OrderTimeline() {
+  const { dark } = useTheme();
   const ref = useRef(null);
 
   useLayoutEffect(() => {
@@ -140,7 +144,7 @@ function OrderTimeline() {
 
   return (
     <div ref={ref} className="relative">
-      <h3 className="text-sm font-bold text-gray-900 tracking-tight mb-4">Order Timeline</h3>
+      <h3 className={`text-sm font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight mb-4`}>Order Timeline</h3>
       <div className="space-y-0">
         {TIMELINE.map((step, i) => {
           const Icon = step.icon;
@@ -148,21 +152,21 @@ function OrderTimeline() {
             <div key={step.label} className="timeline-item flex items-start gap-3 relative">
               {/* Vertical line */}
               {i < TIMELINE.length - 1 && (
-                <div className="absolute left-[15px] top-[32px] w-0.5 h-8 bg-gray-100" />
+                <div className={`absolute left-[15px] top-[32px] w-0.5 h-8 ${dark ? 'bg-[#2A2A2A]' : 'bg-gray-100'}`} />
               )}
               {/* Dot */}
               <div
                 className={`relative z-10 w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all ${
                   step.active
                     ? "bg-gray-900 text-white shadow-[0_4px_15px_rgba(0,0,0,0.2)]"
-                    : "bg-gray-100 text-gray-400"
+                    : `${dark ? 'bg-[#2A2A2A]' : 'bg-gray-100'} text-gray-400`
                 }`}
               >
                 <Icon size={14} />
               </div>
               {/* Text */}
               <div className="pt-1 pb-4">
-                <p className={`text-sm font-semibold ${step.active ? "text-gray-900" : "text-gray-400"}`}>
+                <p className={`text-sm font-semibold ${step.active ? (dark ? 'text-white' : 'text-gray-900') : "text-gray-400"}`}>
                   {step.label}
                 </p>
                 <p className="text-[11px] text-gray-400 mt-0.5">{step.sub}</p>
@@ -176,6 +180,7 @@ function OrderTimeline() {
 }
 
 function FeedbackSection() {
+  const { dark } = useTheme();
   const ref = useRef(null);
   const [selected, setSelected] = useState([]);
   const [rating, setRating] = useState(0);
@@ -200,12 +205,12 @@ function FeedbackSection() {
 
   if (submitted) {
     return (
-      <div ref={ref} className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 text-center">
+      <div ref={ref} className={`${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl border ${dark ? 'border-white/8' : 'border-gray-100'} p-5 sm:p-6 text-center`}>
         <div className="submitted-msg">
           <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-3">
             <Check size={20} className="text-green-500" />
           </div>
-          <p className="text-sm font-semibold text-gray-900">Thanks for your feedback!</p>
+          <p className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>Thanks for your feedback!</p>
           <p className="text-xs text-gray-400 mt-1">Your opinion helps us improve.</p>
         </div>
       </div>
@@ -213,8 +218,8 @@ function FeedbackSection() {
   }
 
   return (
-    <div ref={ref} className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-6">
-      <h3 className="text-sm font-bold text-gray-900 tracking-tight flex items-center gap-2">
+    <div ref={ref} className={`${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl border ${dark ? 'border-white/8' : 'border-gray-100'} p-5 sm:p-6`}>
+      <h3 className={`text-sm font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight flex items-center gap-2`}>
         <MessageCircle size={15} className="text-gray-400" />
         Rate Your Experience
       </h3>
@@ -260,7 +265,7 @@ function FeedbackSection() {
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 cursor-pointer ${
                 active
                   ? "bg-gray-900 text-white shadow-[0_4px_15px_rgba(0,0,0,0.15)]"
-                  : "bg-gray-50 text-gray-500 border border-gray-100 hover:border-gray-300"
+                   : `${dark ? 'bg-[#1E1E1E] text-gray-500 border border-white/8' : 'bg-gray-50 text-gray-500 border border-gray-100'} hover:border-gray-300`
               }`}
             >
               <Icon size={12} />
@@ -276,7 +281,7 @@ function FeedbackSection() {
         className={`w-full h-10 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer ${
           rating > 0
             ? "bg-gray-900 text-white hover:bg-black hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)]"
-            : "bg-gray-100 text-gray-400 cursor-not-allowed"
+            : `${dark ? 'bg-[#2A2A2A] text-gray-400 cursor-not-allowed' : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`
         }`}
       >
         Submit Feedback
@@ -286,6 +291,7 @@ function FeedbackSection() {
 }
 
 export default function ThankYouPage() {
+  const { dark } = useTheme();
   const pageRef = useRef(null);
   const [copied, setCopied] = useState(false);
   const [order, setOrder] = useState(null);
@@ -482,7 +488,7 @@ export default function ThankYouPage() {
   return (
     <section
       ref={pageRef}
-      className="w-full bg-gradient-to-b from-white via-gray-50/30 to-white min-h-screen relative overflow-hidden"
+      className={`w-full ${dark ? 'bg-[#0A0A0A]' : 'bg-gradient-to-b from-white via-gray-50/30 to-white'} min-h-screen relative overflow-hidden`}
     >
       <Confetti />
 
@@ -497,7 +503,7 @@ export default function ThankYouPage() {
           </div>
 
           {/* Title */}
-          <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-[1.1]">
+          <h1 className={`hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight leading-[1.1]`}>
             Thank You!
           </h1>
 
@@ -511,13 +517,13 @@ export default function ThankYouPage() {
 
           {/* Order ID Badge */}
           <div className="order-badge mt-6 inline-flex flex-col items-center gap-2">
-            <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-gray-50 border border-gray-100">
+            <div className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} border ${dark ? 'border-white/8' : 'border-gray-100'}`}>
               <PackageOpen size={15} className="text-gray-400" />
               <span className="text-xs text-gray-500">Order ID</span>
-              <span className="text-sm font-bold text-gray-900 font-mono tracking-wider">{orderId}</span>
+              <span className={`text-sm font-bold ${dark ? 'text-white' : 'text-gray-900'} font-mono tracking-wider`}>{orderId}</span>
               <button
                 onClick={copyOrderId}
-                className="w-7 h-7 rounded-lg flex items-center justify-center text-gray-400 hover:text-gray-900 hover:bg-gray-200 transition-all cursor-pointer"
+                className={`w-7 h-7 rounded-lg flex items-center justify-center text-gray-400 ${dark ? 'hover:text-white hover:bg-white/12' : 'hover:text-gray-900 hover:bg-gray-200'} transition-all cursor-pointer`}
               >
                 {copied ? <Check size={13} className="text-green-500" /> : <Copy size={13} />}
               </button>
@@ -530,27 +536,27 @@ export default function ThankYouPage() {
 
         {/* Info Cards Grid */}
         <div className="mt-10 sm:mt-14 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 max-w-3xl mx-auto">
-          <div className="info-card bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 text-center hover:border-gray-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-500 group">
-            <div className="w-10 h-10 rounded-xl bg-gray-50 group-hover:bg-gray-900 flex items-center justify-center mx-auto transition-all duration-500">
+          <div className={`info-card ${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl border ${dark ? 'border-white/8' : 'border-gray-100'} p-5 sm:p-6 text-center ${dark ? 'hover:border-white/12' : 'hover:border-gray-200'} hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-500 group`}>
+            <div className={`w-10 h-10 rounded-xl ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} group-hover:bg-gray-900 flex items-center justify-center mx-auto transition-all duration-500`}>
               <Mail size={18} className="text-gray-400 group-hover:text-white transition-colors duration-500" />
             </div>
-            <p className="mt-3 text-sm font-semibold text-gray-900">Email Sent</p>
+            <p className={`mt-3 text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>Email Sent</p>
             <p className="mt-1 text-[11px] text-gray-400 leading-relaxed">Confirmation email has been sent to your inbox</p>
           </div>
 
-          <div className="info-card bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 text-center hover:border-gray-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-500 group">
-            <div className="w-10 h-10 rounded-xl bg-gray-50 group-hover:bg-gray-900 flex items-center justify-center mx-auto transition-all duration-500">
+          <div className={`info-card ${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl border ${dark ? 'border-white/8' : 'border-gray-100'} p-5 sm:p-6 text-center ${dark ? 'hover:border-white/12' : 'hover:border-gray-200'} hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-500 group`}>
+            <div className={`w-10 h-10 rounded-xl ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} group-hover:bg-gray-900 flex items-center justify-center mx-auto transition-all duration-500`}>
               <CreditCard size={18} className="text-gray-400 group-hover:text-white transition-colors duration-500" />
             </div>
-            <p className="mt-3 text-sm font-semibold text-gray-900">Payment Confirmed</p>
+            <p className={`mt-3 text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>Payment Confirmed</p>
             <p className="mt-1 text-[11px] text-gray-400 leading-relaxed">Your payment has been securely processed</p>
           </div>
 
-          <div className="info-card bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 text-center hover:border-gray-200 hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-500 group">
-            <div className="w-10 h-10 rounded-xl bg-gray-50 group-hover:bg-gray-900 flex items-center justify-center mx-auto transition-all duration-500">
+          <div className={`info-card ${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl border ${dark ? 'border-white/8' : 'border-gray-100'} p-5 sm:p-6 text-center ${dark ? 'hover:border-white/12' : 'hover:border-gray-200'} hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-all duration-500 group`}>
+            <div className={`w-10 h-10 rounded-xl ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} group-hover:bg-gray-900 flex items-center justify-center mx-auto transition-all duration-500`}>
               <Clock size={18} className="text-gray-400 group-hover:text-white transition-colors duration-500" />
             </div>
-            <p className="mt-3 text-sm font-semibold text-gray-900">Estimated Delivery</p>
+            <p className={`mt-3 text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>Estimated Delivery</p>
             <p className="mt-1 text-[11px] text-gray-400 leading-relaxed">5-7 business days from order date</p>
           </div>
         </div>
@@ -559,7 +565,7 @@ export default function ThankYouPage() {
         <div className="mt-10 sm:mt-14 grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6 lg:gap-8 max-w-5xl mx-auto items-start">
           {/* Left - Timeline + Feedback */}
           <div className="space-y-6">
-            <div className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-6">
+            <div className={`${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl border ${dark ? 'border-white/8' : 'border-gray-100'} p-5 sm:p-6`}>
               <OrderTimeline />
             </div>
             <FeedbackSection />
@@ -568,18 +574,18 @@ export default function ThankYouPage() {
           {/* Right - Quick Actions */}
           <div className="space-y-4 lg:sticky lg:top-24">
             {/* What's Next */}
-            <div className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-6">
-              <h3 className="text-sm font-bold text-gray-900 tracking-tight mb-4">What&apos;s Next?</h3>
+            <div className={`${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl border ${dark ? 'border-white/8' : 'border-gray-100'} p-5 sm:p-6`}>
+              <h3 className={`text-sm font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight mb-4`}>What&apos;s Next?</h3>
               <div className="space-y-3">
                 <Link
                   to="/shop"
-                  className="action-btn w-full flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-900 group transition-all duration-500 cursor-pointer"
+                  className={`action-btn w-full flex items-center gap-3 p-3 rounded-xl ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} hover:bg-gray-900 group transition-all duration-500 cursor-pointer`}
                 >
                   <div className="w-9 h-9 rounded-lg bg-white group-hover:bg-gray-800 flex items-center justify-center shrink-0 transition-all duration-500 shadow-sm">
                     <ShoppingBagIcon />
                   </div>
                   <div className="flex-1 text-left">
-                    <p className="text-xs font-semibold text-gray-900 group-hover:text-white transition-colors">Continue Shopping</p>
+                    <p className={`text-xs font-semibold ${dark ? 'text-white' : 'text-gray-900'} group-hover:text-white transition-colors`}>Continue Shopping</p>
                     <p className="text-[10px] text-gray-400 group-hover:text-gray-300 transition-colors">Browse more products</p>
                   </div>
                   <ArrowRight size={14} className="text-gray-300 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
@@ -587,13 +593,13 @@ export default function ThankYouPage() {
 
                 <button
                   onClick={downloadReceipt}
-                  className="action-btn w-full flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-900 group transition-all duration-500 cursor-pointer"
+                  className={`action-btn w-full flex items-center gap-3 p-3 rounded-xl ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} hover:bg-gray-900 group transition-all duration-500 cursor-pointer`}
                 >
                   <div className="w-9 h-9 rounded-lg bg-white group-hover:bg-gray-800 flex items-center justify-center shrink-0 transition-all duration-500 shadow-sm">
                     <Download size={15} className="text-gray-500 group-hover:text-white transition-colors" />
                   </div>
                   <div className="flex-1 text-left">
-                    <p className="text-xs font-semibold text-gray-900 group-hover:text-white transition-colors">Download Receipt</p>
+                    <p className={`text-xs font-semibold ${dark ? 'text-white' : 'text-gray-900'} group-hover:text-white transition-colors`}>Download Receipt</p>
                     <p className="text-[10px] text-gray-400 group-hover:text-gray-300 transition-colors">Save order details</p>
                   </div>
                   <ArrowRight size={14} className="text-gray-300 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
@@ -607,13 +613,13 @@ export default function ThankYouPage() {
                       url: window.location.origin,
                     });
                   }}
-                  className="action-btn w-full flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-900 group transition-all duration-500 cursor-pointer"
+                  className={`action-btn w-full flex items-center gap-3 p-3 rounded-xl ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} hover:bg-gray-900 group transition-all duration-500 cursor-pointer`}
                 >
                   <div className="w-9 h-9 rounded-lg bg-white group-hover:bg-gray-800 flex items-center justify-center shrink-0 transition-all duration-500 shadow-sm">
                     <Share2 size={15} className="text-gray-500 group-hover:text-white transition-colors" />
                   </div>
                   <div className="flex-1 text-left">
-                    <p className="text-xs font-semibold text-gray-900 group-hover:text-white transition-colors">Share Order</p>
+                    <p className={`text-xs font-semibold ${dark ? 'text-white' : 'text-gray-900'} group-hover:text-white transition-colors`}>Share Order</p>
                     <p className="text-[10px] text-gray-400 group-hover:text-gray-300 transition-colors">Tell friends about NovaDrive</p>
                   </div>
                   <ArrowRight size={14} className="text-gray-300 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />

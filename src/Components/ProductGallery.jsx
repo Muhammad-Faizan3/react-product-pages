@@ -1,5 +1,6 @@
 import { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { ScrollReveal, useInView } from "../hooks/useInView";
+import { useTheme } from '../App';
 import gsap from "gsap";
 
 import img1 from "../assets/6.jpg";
@@ -11,6 +12,7 @@ import img5 from "../assets/13.jpg";
 const images = [img1, img2, img3, img4, img5];
 
 export default function ProductGallery() {
+  const { dark } = useTheme();
   const [selected, setSelected] = useState(0);
   const [ref] = useInView();
   const mainImageRef = useRef(null);
@@ -89,14 +91,14 @@ export default function ProductGallery() {
   };
 
   return (
-    <section className="w-full bg-white py-12">
+    <section className={`w-full ${dark ? 'bg-[#0A0A0A]' : 'bg-white'} py-12`}>
       <div ref={ref} className="w-full mx-auto px-4 sm:px-6 lg:px-20">
 
         {/* Main Image */}
         <ScrollReveal animation="anim-blur">
           <div
             ref={mainBoxRef}
-            className="w-full h-[300px] sm:h-[420px] md:h-[560px] lg:h-[620px] bg-gray-100 flex items-center justify-center overflow-hidden cursor-pointer"
+            className={`w-full h-[300px] sm:h-[420px] md:h-[560px] lg:h-[620px] ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-100'} flex items-center justify-center overflow-hidden cursor-pointer`}
             style={{ perspective: "1000px" }}
           >
             <img
@@ -111,7 +113,7 @@ export default function ProductGallery() {
 
         {/* Divider */}
         <div className="w-full my-6">
-          <div className="h-px bg-gray-300" />
+          <div className={`h-px ${dark ? 'bg-white/10' : 'bg-gray-300'}`} />
         </div>
 
         {/* Thumbnails */}

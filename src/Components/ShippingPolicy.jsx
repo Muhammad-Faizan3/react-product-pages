@@ -2,6 +2,7 @@ import { useRef, useLayoutEffect, useEffect } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTheme } from '../App';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -147,6 +148,7 @@ const SECTIONS = [
 ];
 
 function TableOfContents({ activeSection }) {
+  const { dark } = useTheme();
   return (
     <div className="hidden lg:block sticky top-24 w-56 shrink-0">
       <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">On this page</p>
@@ -159,7 +161,7 @@ function TableOfContents({ activeSection }) {
               className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 group ${
                 activeSection === i
                   ? "bg-gray-900 text-white shadow-[0_4px_15px_rgba(0,0,0,0.15)]"
-                  : "text-gray-400 hover:text-gray-900 hover:bg-gray-50"
+                  : `text-gray-400 hover:${dark ? 'text-white' : 'text-gray-900'} ${dark ? 'hover:bg-[#1E1E1E]' : 'hover:bg-gray-50'}`
               }`}
             >
               <span className="truncate">{s.title}</span>
@@ -174,6 +176,7 @@ function TableOfContents({ activeSection }) {
 export default function ShippingPolicy() {
   const pageRef = useRef(null);
   const activeSection = useRef(0);
+  const { dark } = useTheme();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -232,7 +235,7 @@ export default function ShippingPolicy() {
       if (i === idx) {
         a.className = "flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 group bg-gray-900 text-white shadow-[0_4px_15px_rgba(0,0,0,0.15)]";
       } else {
-        a.className = "flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 group text-gray-400 hover:text-gray-900 hover:bg-gray-50";
+        a.className = `flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 group text-gray-400 hover:${dark ? 'text-white' : 'text-gray-900'} ${dark ? 'hover:bg-[#1E1E1E]' : 'hover:bg-gray-50'}`;
       }
     });
   };
@@ -240,7 +243,7 @@ export default function ShippingPolicy() {
   return (
     <section
       ref={pageRef}
-      className="w-full bg-gradient-to-b from-white via-gray-50/30 to-white min-h-screen relative overflow-hidden"
+      className={`w-full ${dark ? 'bg-[#0A0A0A]' : 'bg-gradient-to-b from-white via-gray-50/30 to-white'} min-h-screen relative overflow-hidden`}
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-b from-gray-100/40 to-transparent rounded-full blur-3xl" />
@@ -250,7 +253,7 @@ export default function ShippingPolicy() {
       <div className="relative z-10 max-w-[1700px] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[120px] py-10 sm:py-14 md:py-20 lg:py-28">
         {/* Hero Section */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-          <span className="hero-badge inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400 bg-gray-100 px-3 sm:px-4 py-1.5 rounded-full mb-5 sm:mb-6">
+          <span className={`hero-badge inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400 ${dark ? 'bg-[#2A2A2A]' : 'bg-gray-100'} px-3 sm:px-4 py-1.5 rounded-full mb-5 sm:mb-6`}>
             Legal
           </span>
 
@@ -259,7 +262,7 @@ export default function ShippingPolicy() {
             <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
           </div>
 
-          <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-[1.1]">
+          <h1 className={`hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight leading-[1.1]`}>
             Shipping Policy
           </h1>
 
@@ -268,13 +271,13 @@ export default function ShippingPolicy() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8">
-            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-100">
+            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} ${dark ? 'border-white/8' : 'border-gray-100'}">
               <span className="text-[11px] font-medium text-gray-500">1-2 Day Processing</span>
             </div>
-            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-100">
+            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} ${dark ? 'border-white/8' : 'border-gray-100'}">
               <span className="text-[11px] font-medium text-gray-500">Free Shipping Over 10K</span>
             </div>
-            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-100">
+            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} ${dark ? 'border-white/8' : 'border-gray-100'}">
               <span className="text-[11px] font-medium text-gray-500">Fully Insured</span>
             </div>
           </div>
@@ -293,11 +296,11 @@ export default function ShippingPolicy() {
               const hasDetails = section.details && section.details.length > 0;
               return (
                 <div key={i} id={`section-${i}`} className="shipping-section scroll-mt-24 mb-8 sm:mb-10">
-                  <div className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-7 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow duration-500">
+                  <div className={`${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl ${dark ? 'border-white/8' : 'border-gray-100'} p-5 sm:p-7 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow duration-500`}>
                     <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-5">
                       <div>
                         <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-300">Section {String(i + 1).padStart(2, "0")}</span>
-                        <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight mt-0.5">{section.title}</h2>
+                        <h2 className={`text-base sm:text-lg font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight mt-0.5`}>{section.title}</h2>
                       </div>
                     </div>
 
@@ -305,10 +308,10 @@ export default function ShippingPolicy() {
 
                     {/* Shipping Table */}
                     {section.table && (
-                      <div className="mb-4 sm:mb-5 overflow-hidden rounded-xl border border-gray-100">
+                      <div className={`mb-4 sm:mb-5 overflow-hidden rounded-xl ${dark ? 'border-white/8' : 'border border-gray-100'}`}>
                         <table className="w-full text-sm">
                           <thead>
-                            <tr className="bg-gray-50 border-b border-gray-100">
+                            <tr className={`${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} ${dark ? 'border-white/8' : 'border-b border-gray-100'}`}>
                               <th className="text-left px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-400">Method</th>
                               <th className="text-left px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-400">Time</th>
                               <th className="text-right px-4 py-3 text-[11px] font-bold uppercase tracking-wider text-gray-400">Cost</th>
@@ -316,10 +319,10 @@ export default function ShippingPolicy() {
                           </thead>
                           <tbody>
                             {section.table.map((row, j) => (
-                              <tr key={j} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors">
-                                <td className="px-4 py-3 text-xs font-semibold text-gray-900">{row.method}</td>
+                              <tr key={j} className={`border-b ${dark ? 'border-white/5' : 'border-gray-50'} last:border-0 ${dark ? 'hover:bg-white/5' : 'hover:bg-gray-50/50'} transition-colors`}>
+                                <td className={`px-4 py-3 text-xs font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>{row.method}</td>
                                 <td className="px-4 py-3 text-xs text-gray-500">{row.time}</td>
-                                <td className="px-4 py-3 text-xs font-semibold text-gray-900 text-right">{row.cost}</td>
+                                <td className={`px-4 py-3 text-xs font-semibold ${dark ? 'text-white' : 'text-gray-900'} text-right`}>{row.cost}</td>
                               </tr>
                             ))}
                           </tbody>
@@ -330,9 +333,9 @@ export default function ShippingPolicy() {
                     {hasDetails && (
                       <div className="space-y-2">
                         {section.details.map((detail, j) => (
-                          <div key={j} className="detail-item flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-gray-50/70 hover:bg-gray-50 transition-colors duration-300 group">
+                          <div key={j} className={`detail-item flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl ${dark ? 'bg-[#1E1E1E]/70' : 'bg-gray-50/70'} ${dark ? 'hover:bg-[#1E1E1E]' : 'hover:bg-gray-50'} transition-colors duration-300 group`}>
                             <span className="text-[13px] text-[#FF5A1F] mt-0.5 shrink-0 group-hover:translate-x-0.5 transition-transform duration-300">›</span>
-                            <span className="text-xs sm:text-[13px] text-gray-600 leading-relaxed">{detail}</span>
+                            <span className={`text-xs sm:text-[13px] ${dark ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}>{detail}</span>
                           </div>
                         ))}
                       </div>
@@ -343,8 +346,8 @@ export default function ShippingPolicy() {
             })}
 
             {/* Contact CTA */}
-            <div className="footer-cta bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-2xl border border-gray-100 p-6 sm:p-8 text-center">
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight mb-2">Need Help With Shipping?</h3>
+            <div className={`footer-cta ${dark ? 'bg-[#1E1E1E]' : 'bg-gradient-to-br from-gray-50 to-gray-100/50'} rounded-2xl ${dark ? 'border-white/8' : 'border-gray-100'} p-6 sm:p-8 text-center`}>
+              <h3 className={`text-lg sm:text-xl font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight mb-2`}>Need Help With Shipping?</h3>
               <p className="text-sm text-gray-400 max-w-md mx-auto mb-5 leading-relaxed">
                 Our support team is available to help with any shipping questions, tracking issues, or delivery concerns.
               </p>
@@ -357,7 +360,7 @@ export default function ShippingPolicy() {
                 </a>
                 <Link
                   to="/"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 text-sm font-semibold rounded-xl border border-gray-200 hover:border-gray-300 hover:text-gray-900 transition-all duration-300 hover:-translate-y-0.5"
+                  className={`inline-flex items-center gap-2 px-5 py-2.5 ${dark ? 'bg-[#141414]' : 'bg-white'} ${dark ? 'text-gray-300' : 'text-gray-700'} text-sm font-semibold rounded-xl ${dark ? 'border-white/12' : 'border-gray-200'} hover:border-gray-300 hover:text-gray-900 transition-all duration-300 hover:-translate-y-0.5`}
                 >
                   Back to Home
                 </Link>

@@ -12,6 +12,7 @@ import {
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCart } from "../context/CartContext";
+import { useTheme } from '../App';
 
 import img1 from "../assets/WhatsApp Image 2026-07-11 at 5.07.56 PM (1).jpeg";
 import img2 from "../assets/WhatsApp Image 2026-07-11 at 5.07.56 PM.jpeg";
@@ -161,6 +162,7 @@ const SORT_OPTIONS = [
 function FilterGroup({ section, selected, onToggle }) {
   const [open, setOpen] = useState(true);
   const contentRef = useRef(null);
+  const { dark } = useTheme();
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -181,10 +183,10 @@ function FilterGroup({ section, selected, onToggle }) {
   }, []);
 
   return (
-    <div className="border-b border-gray-100 last:border-b-0">
+    <div className={`border-b ${dark ? 'border-white/8' : 'border-gray-100'} last:border-b-0`}>
       <button
         onClick={toggleOpen}
-        className="w-full flex items-center justify-between py-3.5 text-sm font-semibold text-gray-900 hover:text-black transition-colors cursor-pointer"
+        className={`w-full flex items-center justify-between py-3.5 text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'} hover:text-black transition-colors cursor-pointer`}
       >
         {section.label}
         <ChevronDown
@@ -205,7 +207,7 @@ function FilterGroup({ section, selected, onToggle }) {
             return (
               <label
                 key={opt}
-                className="flex items-center gap-2.5 py-1.5 px-2 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer group"
+                className={`flex items-center gap-2.5 py-1.5 px-2 rounded-lg transition-colors cursor-pointer group ${dark ? 'hover:bg-[#141414]' : 'hover:bg-gray-50'}`}
               >
                 <span
                   className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all duration-200 ${
@@ -222,7 +224,7 @@ function FilterGroup({ section, selected, onToggle }) {
                   onChange={() => onToggle(section.key, opt)}
                   className="sr-only"
                 />
-                <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
+                <span className={`text-sm ${dark ? 'text-gray-400 group-hover:text-white' : 'text-gray-600 group-hover:text-gray-900'} transition-colors`}>
                   {opt}
                 </span>
               </label>
@@ -237,8 +239,8 @@ function FilterGroup({ section, selected, onToggle }) {
 /* ── Price Range Slider ── */
 function PriceRange({ range, setRange }) {
   return (
-    <div className="border-b border-gray-100 pb-4">
-      <p className="text-sm font-semibold text-gray-900 mb-3">Price Range</p>
+    <div className={`border-b ${dark ? 'border-white/8' : 'border-gray-100'} pb-4`}>
+      <p className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'} mb-3`}>Price Range</p>
       <div className="flex items-center gap-3">
         <div className="flex-1">
           <input
@@ -271,9 +273,10 @@ function PriceRange({ range, setRange }) {
 
 /* ── Rating Filter ── */
 function RatingFilter({ minRating, setMinRating }) {
+  const { dark } = useTheme();
   return (
-    <div className="border-b border-gray-100 pb-4">
-      <p className="text-sm font-semibold text-gray-900 mb-3">Rating</p>
+    <div className={`border-b ${dark ? 'border-white/8' : 'border-gray-100'} pb-4`}>
+      <p className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'} mb-3`}>Rating</p>
       <div className="space-y-1.5">
         {[4, 3, 2, 1].map((r) => (
           <button
@@ -282,7 +285,7 @@ function RatingFilter({ minRating, setMinRating }) {
             className={`flex items-center gap-2 py-1.5 px-2 rounded-lg w-full text-left transition-all cursor-pointer ${
               minRating === r
                 ? "bg-black/5"
-                : "hover:bg-gray-50"
+                : dark ? "hover:bg-[#141414]" : "hover:bg-gray-50"
             }`}
           >
             <div className="flex items-center gap-0.5">
@@ -291,7 +294,7 @@ function RatingFilter({ minRating, setMinRating }) {
                   key={i}
                   size={12}
                   className={
-                    i < r ? "fill-black text-black" : "text-gray-200"
+                    i < r ? `${dark ? 'fill-white text-white' : 'fill-black text-black'}` : "text-gray-200"
                   }
                 />
               ))}
@@ -307,9 +310,9 @@ function RatingFilter({ minRating, setMinRating }) {
 /* ── Availability Filter ── */
 function AvailabilityFilter({ inStockOnly, setInStockOnly }) {
   return (
-    <div className="border-b border-gray-100 pb-4">
-      <p className="text-sm font-semibold text-gray-900 mb-3">Availability</p>
-      <label className="flex items-center gap-2.5 py-1.5 px-2 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer group">
+    <div className={`border-b ${dark ? 'border-white/8' : 'border-gray-100'} pb-4`}>
+      <p className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'} mb-3`}>Availability</p>
+      <label className={`flex items-center gap-2.5 py-1.5 px-2 rounded-lg transition-colors cursor-pointer group ${dark ? 'hover:bg-[#141414]' : 'hover:bg-gray-50'}`}>
         <span
           className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all duration-200 ${
             inStockOnly
@@ -325,7 +328,7 @@ function AvailabilityFilter({ inStockOnly, setInStockOnly }) {
           onChange={() => setInStockOnly(!inStockOnly)}
           className="sr-only"
         />
-        <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">
+        <span className={`text-sm ${dark ? 'text-gray-400 group-hover:text-white' : 'text-gray-600 group-hover:text-gray-900'} transition-colors`}>
           In Stock Only
         </span>
       </label>
@@ -337,6 +340,7 @@ function AvailabilityFilter({ inStockOnly, setInStockOnly }) {
 function ProductCard({ product, index }) {
   const cardRef = useRef(null);
   const { addItem } = useCart();
+  const { dark } = useTheme();
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -385,26 +389,26 @@ function ProductCard({ product, index }) {
   return (
     <div
       ref={cardRef}
-      className="group relative bg-white rounded-2xl border border-gray-100 overflow-hidden"
+      className={`group relative ${dark ? 'bg-[#0A0A0A]' : 'bg-white'} rounded-2xl border ${dark ? 'border-white/8' : 'border-gray-100'} overflow-hidden`}
     >
       <div className="absolute top-3 left-3 z-10">
         <span className="bg-black text-white text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider px-2 sm:px-3 py-1 rounded-full">
           {product.badge}
         </span>
       </div>
-      <div className="bg-white rounded-t-2xl flex items-center justify-center p-3 sm:p-4 md:p-6 h-32 sm:h-40 md:h-52 lg:h-64 overflow-hidden">
+      <div className={`${dark ? 'bg-[#0A0A0A]' : 'bg-white'} rounded-t-2xl flex items-center justify-center p-3 sm:p-4 md:p-6 h-32 sm:h-40 md:h-52 lg:h-64 overflow-hidden`}>
         <img 
           src={product.image} 
           alt={product.name} 
           className="w-full h-full object-contain" 
         />
       </div>
-      <div className="mx-3 sm:mx-6 h-px bg-gray-100" />
+      <div className={`mx-3 sm:mx-6 h-px ${dark ? 'bg-white/8' : 'bg-gray-100'}`} />
       <div className="p-3 sm:p-4 md:p-6">
         <span className="text-[9px] sm:text-[11px] font-semibold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-gray-400">
           {product.category}
         </span>
-        <h3 className="mt-1 sm:mt-2 text-sm sm:text-base md:text-lg font-semibold text-gray-900 leading-tight line-clamp-1">
+        <h3 className={`mt-1 sm:mt-2 text-sm sm:text-base md:text-lg font-semibold ${dark ? 'text-white' : 'text-gray-900'} leading-tight line-clamp-1`}>
           {product.name}
         </h3>
         <p className="hidden md:block mt-1.5 text-sm text-gray-500 leading-relaxed line-clamp-2">
@@ -418,8 +422,8 @@ function ProductCard({ product, index }) {
                 size={10} 
                 className="sm:text-xs md:text-sm" 
                 style={{ 
-                  fill: i < Math.floor(product.rating) ? "black" : "none",
-                  color: i < Math.floor(product.rating) ? "black" : "#d1d5db"
+                  fill: i < Math.floor(product.rating) ? (dark ? "white" : "black") : "none",
+                  color: i < Math.floor(product.rating) ? (dark ? "white" : "black") : "#d1d5db"
                 }} 
               />
             ))}
@@ -428,7 +432,7 @@ function ProductCard({ product, index }) {
           <span className="text-[9px] sm:text-xs text-gray-400">({product.reviews})</span>
         </div>
         <div className="mt-2 sm:mt-4 flex items-baseline gap-1.5 sm:gap-2.5 flex-wrap">
-          <span className="text-base sm:text-lg md:text-xl font-bold text-gray-900">{formatPrice(product.price)}</span>
+          <span className={`text-base sm:text-lg md:text-xl font-bold ${dark ? 'text-white' : 'text-gray-900'}`}>{formatPrice(product.price)}</span>
           <span className="text-[10px] sm:text-sm text-gray-400 line-through">{formatPrice(product.oldPrice)}</span>
           <span className="text-[8px] sm:text-[10px] font-semibold text-[#FF5A1F] bg-[#FF5A1F]/10 px-1.5 sm:px-2 py-0.5 rounded-full">
             {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}% OFF
@@ -445,7 +449,7 @@ function ProductCard({ product, index }) {
           </button>
           <button
             onClick={handleWishlist}
-            className="h-9 sm:h-10 md:h-12 w-9 sm:w-10 md:w-12 rounded-xl border border-gray-200 bg-white text-gray-500 flex items-center justify-center transition-all duration-300 hover:border-[#FF5A1F] hover:text-[#FF5A1F] hover:shadow-[0_8px_30px_rgba(255,90,31,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            className={`h-9 sm:h-10 md:h-12 w-9 sm:w-10 md:w-12 rounded-xl border ${dark ? 'border-white/12' : 'border-gray-200'} ${dark ? 'bg-[#0A0A0A]' : 'bg-white'} text-gray-500 flex items-center justify-center transition-all duration-300 hover:border-[#FF5A1F] hover:text-[#FF5A1F] hover:shadow-[0_8px_30px_rgba(255,90,31,0.15)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer`}
           >
             <Heart size={14} className="sm:text-base" />
           </button>
@@ -469,6 +473,8 @@ export default function ShopPage() {
   const [priceRange, setPriceRange] = useState([0, 60000]);
   const [selectedFilters, setSelectedFilters] = useState({});
   const [sortOpen, setSortOpen] = useState(false);
+
+  const { dark } = useTheme();
 
   const toggleFilter = (key, value) => {
     setSelectedFilters((prev) => {
@@ -579,14 +585,14 @@ export default function ShopPage() {
   );
 
   return (
-    <section ref={sectionRef} className="w-full bg-white min-h-screen overflow-hidden">
+    <section ref={sectionRef} className={`w-full ${dark ? 'bg-[#0A0A0A]' : 'bg-white'} min-h-screen overflow-hidden`}>
       <div className="max-w-[1700px] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[120px] py-10 sm:py-12 md:py-16 lg:py-24">
         {/* Header */}
         <div ref={headingRef} className="text-center mb-8 sm:mb-10 lg:mb-14">
-          <span className="inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400 bg-gray-100 px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-5">
+          <span className={`inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400 ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-100'} px-3 sm:px-4 py-1.5 rounded-full mb-4 sm:mb-5`}>
             Our Collection
           </span>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 tracking-tight">
+          <h1 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight`}>
             Shop All Products
           </h1>
           <p className="mt-2 sm:mt-4 text-sm sm:text-base md:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed px-4">
@@ -601,7 +607,7 @@ export default function ShopPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search products..."
-              className="w-full h-10 sm:h-11 md:h-12 pl-4 sm:pl-5 pr-10 sm:pr-12 rounded-xl border-2 border-gray-200 bg-gray-50 text-sm text-gray-900 placeholder-gray-400 outline-none transition-all duration-300 focus:border-black focus:bg-white focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)]"
+              className={`w-full h-10 sm:h-11 md:h-12 pl-4 sm:pl-5 pr-10 sm:pr-12 rounded-xl border-2 ${dark ? 'border-white/12' : 'border-gray-200'} ${dark ? 'bg-[#141414]' : 'bg-gray-50'} text-sm ${dark ? 'text-white' : 'text-gray-900'} placeholder-gray-400 outline-none transition-all duration-300 focus:border-black ${dark ? 'focus:bg-[#1A1A1A]' : 'focus:bg-white'} focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)]`}
             />
             <button className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-lg bg-black flex items-center justify-center hover:bg-[#FF5A1F] transition-all duration-300 cursor-pointer">
               <Search size={14} className="sm:text-base text-white" />
@@ -613,7 +619,7 @@ export default function ShopPage() {
         <div className="lg:hidden flex items-center justify-between mb-4 sm:mb-6 px-1">
           <button
             onClick={() => setMobileFilter(true)}
-            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border-2 border-gray-200 text-xs sm:text-sm font-semibold text-gray-700 hover:border-black transition-all cursor-pointer"
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border-2 ${dark ? 'border-white/12' : 'border-gray-200'} text-xs sm:text-sm font-semibold ${dark ? 'text-gray-300' : 'text-gray-700'} hover:border-black transition-all cursor-pointer`}
           >
             <SlidersHorizontal size={14} className="sm:text-base" />
             <span>Filters</span>
@@ -628,7 +634,7 @@ export default function ShopPage() {
           <div className="relative">
             <button
               onClick={() => setSortOpen(!sortOpen)}
-              className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border-2 border-gray-200 text-xs sm:text-sm font-semibold text-gray-700 hover:border-black transition-all cursor-pointer"
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl border-2 ${dark ? 'border-white/12' : 'border-gray-200'} text-xs sm:text-sm font-semibold ${dark ? 'text-gray-300' : 'text-gray-700'} hover:border-black transition-all cursor-pointer`}
             >
               <span>Sort</span>
               <ChevronDown 
@@ -637,7 +643,7 @@ export default function ShopPage() {
               />
             </button>
             {sortOpen && (
-              <div className="absolute right-0 top-full mt-2 w-48 sm:w-52 bg-white border border-gray-200 rounded-xl shadow-xl z-50 py-2">
+              <div className={`absolute right-0 top-full mt-2 w-48 sm:w-52 ${dark ? 'bg-[#0A0A0A]' : 'bg-white'} border ${dark ? 'border-white/12' : 'border-gray-200'} rounded-xl shadow-xl z-50 py-2`}>
                 {SORT_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
@@ -645,7 +651,7 @@ export default function ShopPage() {
                     className={`w-full text-left px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm transition-colors cursor-pointer ${
                       sortBy === opt.value
                         ? "bg-black text-white font-semibold"
-                        : "text-gray-600 hover:bg-gray-50"
+                        : dark ? "text-gray-400 hover:bg-[#141414]" : "text-gray-600 hover:bg-gray-50"
                     }`}
                   >
                     {opt.label}
@@ -671,7 +677,7 @@ export default function ShopPage() {
                 });
               }
             }}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 border-gray-200 text-sm font-semibold text-gray-700 hover:border-black hover:bg-gray-50 transition-all cursor-pointer"
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border-2 ${dark ? 'border-white/12' : 'border-gray-200'} text-sm font-semibold ${dark ? 'text-gray-300' : 'text-gray-700'} hover:border-black ${dark ? 'hover:bg-[#141414]' : 'hover:bg-gray-50'} transition-all cursor-pointer`}
           >
             <SlidersHorizontal size={16} className={`transition-transform duration-300 ${filterOpen ? "rotate-180" : ""}`} />
             {filterOpen ? "Hide Filters" : "Show Filters"}
@@ -683,7 +689,7 @@ export default function ShopPage() {
           </button>
 
           <p className="text-sm text-gray-400">
-            Showing <span className="font-semibold text-gray-700">{filteredProducts.length}</span> product{filteredProducts.length !== 1 ? "s" : ""}
+            Showing <span className={`font-semibold ${dark ? 'text-gray-300' : 'text-gray-700'}`}>{filteredProducts.length}</span> product{filteredProducts.length !== 1 ? "s" : ""}
           </p>
         </div>
 
@@ -697,7 +703,7 @@ export default function ShopPage() {
           >
             <div className="w-[260px] sticky top-20">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider">
+                <h3 className={`text-sm font-bold ${dark ? 'text-white' : 'text-gray-900'} uppercase tracking-wider`}>
                   Filters
                 </h3>
                 {activeFilterCount > 0 && (
@@ -713,8 +719,8 @@ export default function ShopPage() {
               <FilterContent />
 
               {/* Sort (desktop) */}
-              <div className="mt-6 pt-4 border-t border-gray-100">
-                <p className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">
+              <div className={`mt-6 pt-4 border-t ${dark ? 'border-white/8' : 'border-gray-100'}`}>
+                <p className={`text-sm font-bold ${dark ? 'text-white' : 'text-gray-900'} uppercase tracking-wider mb-3`}>
                   Sort By
                 </p>
                 <div className="space-y-1">
@@ -725,7 +731,7 @@ export default function ShopPage() {
                       className={`w-full flex items-center gap-2.5 py-2 px-2.5 rounded-lg text-sm transition-all cursor-pointer ${
                         sortBy === opt.value
                           ? "bg-black text-white font-semibold"
-                          : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                          : dark ? "text-gray-400 hover:bg-[#141414] hover:text-white" : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                       }`}
                     >
                       <span
@@ -754,7 +760,7 @@ export default function ShopPage() {
                   values.map((v) => (
                     <span
                       key={`${key}-${v}`}
-                      className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gray-100 text-[10px] sm:text-xs font-medium text-gray-700"
+                      className={`inline-flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-100'} text-[10px] sm:text-xs font-medium ${dark ? 'text-gray-300' : 'text-gray-700'}`}
                     >
                       {v}
                       <button
@@ -767,7 +773,7 @@ export default function ShopPage() {
                   ))
                 )}
                 {minRating > 0 && (
-                  <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gray-100 text-[10px] sm:text-xs font-medium text-gray-700">
+                  <span className={`inline-flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-100'} text-[10px] sm:text-xs font-medium ${dark ? 'text-gray-300' : 'text-gray-700'}`}>
                     {minRating}★ & up
                     <button onClick={() => setMinRating(0)} className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-gray-300 flex items-center justify-center hover:bg-[#FF5A1F] hover:text-white transition-colors cursor-pointer">
                       <X size={7} className="sm:w-2 sm:h-2" />
@@ -775,7 +781,7 @@ export default function ShopPage() {
                   </span>
                 )}
                 {inStockOnly && (
-                  <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gray-100 text-[10px] sm:text-xs font-medium text-gray-700">
+                  <span className={`inline-flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-100'} text-[10px] sm:text-xs font-medium ${dark ? 'text-gray-300' : 'text-gray-700'}`}>
                     In Stock
                     <button onClick={() => setInStockOnly(false)} className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-gray-300 flex items-center justify-center hover:bg-[#FF5A1F] hover:text-white transition-colors cursor-pointer">
                       <X size={7} className="sm:w-2 sm:h-2" />
@@ -799,10 +805,10 @@ export default function ShopPage() {
               </div>
             ) : (
               <div className="text-center py-12 sm:py-20">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-5">
+                <div className={`w-12 h-12 sm:w-16 sm:h-16 ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-100'} rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-5`}>
                   <Search size={20} className="sm:w-6 sm:h-6 text-gray-300" />
                 </div>
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900">
+                <h3 className={`text-base sm:text-lg font-semibold ${dark ? 'text-white' : 'text-gray-900'}`}>
                   No products found
                 </h3>
                 <p className="mt-1 sm:mt-2 text-sm text-gray-500 px-4">
@@ -821,7 +827,7 @@ export default function ShopPage() {
 
         {/* Bottom CTA */}
         <div className="mt-12 sm:mt-16 lg:mt-24 text-center">
-          <button className="px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-xl border-2 border-black text-black text-xs sm:text-sm font-semibold hover:bg-black hover:text-white transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 cursor-pointer">
+          <button className={`px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-xl border-2 border-black ${dark ? 'text-white' : 'text-black'} text-xs sm:text-sm font-semibold hover:bg-black hover:text-white transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 cursor-pointer`}>
             View All Categories
           </button>
         </div>
@@ -834,20 +840,20 @@ export default function ShopPage() {
             className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => setMobileFilter(false)}
           />
-          <div className="absolute left-0 top-0 bottom-0 w-[300px] sm:w-[320px] max-w-[85vw] bg-white shadow-2xl overflow-y-auto">
+          <div className={`absolute left-0 top-0 bottom-0 w-[300px] sm:w-[320px] max-w-[85vw] ${dark ? 'bg-[#0A0A0A]' : 'bg-white'} shadow-2xl overflow-y-auto`}>
             <div className="p-4 sm:p-6">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
-                <h3 className="text-base sm:text-lg font-bold text-gray-900">Filters</h3>
+                <h3 className={`text-base sm:text-lg font-bold ${dark ? 'text-white' : 'text-gray-900'}`}>Filters</h3>
                 <button
                   onClick={() => setMobileFilter(false)}
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors cursor-pointer"
+                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full ${dark ? 'bg-[#1E1E1E] hover:bg-[#2A2A2A]' : 'bg-gray-100 hover:bg-gray-200'} flex items-center justify-center transition-colors cursor-pointer`}
                 >
                   <X size={14} className="sm:text-base" />
                 </button>
               </div>
               <FilterContent />
-              <div className="mt-6 pt-4 border-t border-gray-100">
-                <p className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">
+              <div className={`mt-6 pt-4 border-t ${dark ? 'border-white/8' : 'border-gray-100'}`}>
+                <p className={`text-sm font-bold ${dark ? 'text-white' : 'text-gray-900'} uppercase tracking-wider mb-3`}>
                   Sort By
                 </p>
                 <div className="space-y-1">
@@ -858,7 +864,7 @@ export default function ShopPage() {
                       className={`w-full flex items-center gap-2.5 py-2 px-2.5 rounded-lg text-sm transition-all cursor-pointer ${
                         sortBy === opt.value
                           ? "bg-black text-white font-semibold"
-                          : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                          : dark ? "text-gray-400 hover:bg-[#141414] hover:text-white" : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                       }`}
                     >
                       <span
@@ -879,7 +885,7 @@ export default function ShopPage() {
                 {activeFilterCount > 0 && (
                   <button
                     onClick={clearAll}
-                    className="flex-1 py-2.5 sm:py-3 rounded-xl border-2 border-gray-200 text-xs sm:text-sm font-semibold text-gray-600 hover:border-black transition-all cursor-pointer"
+                    className={`flex-1 py-2.5 sm:py-3 rounded-xl border-2 ${dark ? 'border-white/12' : 'border-gray-200'} text-xs sm:text-sm font-semibold ${dark ? 'text-gray-400' : 'text-gray-600'} hover:border-black transition-all cursor-pointer`}
                   >
                     Clear All
                   </button>

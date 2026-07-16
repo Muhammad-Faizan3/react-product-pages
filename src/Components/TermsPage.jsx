@@ -2,6 +2,7 @@ import { useRef, useLayoutEffect, useEffect } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTheme } from '../App';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -127,6 +128,7 @@ const SECTIONS = [
 ];
 
 function TableOfContents({ activeSection }) {
+  const { dark } = useTheme();
   return (
     <div className="hidden lg:block sticky top-24 w-56 shrink-0">
       <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">On this page</p>
@@ -139,7 +141,7 @@ function TableOfContents({ activeSection }) {
               className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 group ${
                 activeSection === i
                   ? "bg-gray-900 text-white shadow-[0_4px_15px_rgba(0,0,0,0.15)]"
-                  : "text-gray-400 hover:text-gray-900 hover:bg-gray-50"
+                  : `text-gray-400 hover:${dark ? 'text-white' : 'text-gray-900'} ${dark ? 'hover:bg-[#1E1E1E]' : 'hover:bg-gray-50'}`
               }`}
             >
               <span className="truncate">{s.title}</span>
@@ -154,6 +156,7 @@ function TableOfContents({ activeSection }) {
 export default function TermsPage() {
   const pageRef = useRef(null);
   const activeSection = useRef(0);
+  const { dark } = useTheme();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -212,7 +215,7 @@ export default function TermsPage() {
       if (i === idx) {
         a.className = "flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 group bg-gray-900 text-white shadow-[0_4px_15px_rgba(0,0,0,0.15)]";
       } else {
-        a.className = "flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 group text-gray-400 hover:text-gray-900 hover:bg-gray-50";
+        a.className = `flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-300 group text-gray-400 hover:${dark ? 'text-white' : 'text-gray-900'} ${dark ? 'hover:bg-[#1E1E1E]' : 'hover:bg-gray-50'}`;
       }
     });
   };
@@ -220,7 +223,7 @@ export default function TermsPage() {
   return (
     <section
       ref={pageRef}
-      className="w-full bg-gradient-to-b from-white via-gray-50/30 to-white min-h-screen relative overflow-hidden"
+      className={`w-full ${dark ? 'bg-[#0A0A0A]' : 'bg-gradient-to-b from-white via-gray-50/30 to-white'} min-h-screen relative overflow-hidden`}
     >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-b from-gray-100/40 to-transparent rounded-full blur-3xl" />
@@ -230,7 +233,7 @@ export default function TermsPage() {
       <div className="relative z-10 max-w-[1700px] mx-auto px-4 sm:px-6 md:px-10 lg:px-20 xl:px-[120px] py-10 sm:py-14 md:py-20 lg:py-28">
         {/* Hero Section */}
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-          <span className="hero-badge inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400 bg-gray-100 px-3 sm:px-4 py-1.5 rounded-full mb-5 sm:mb-6">
+          <span className={`hero-badge inline-block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-gray-400 ${dark ? 'bg-[#2A2A2A]' : 'bg-gray-100'} px-3 sm:px-4 py-1.5 rounded-full mb-5 sm:mb-6`}>
             Legal
           </span>
 
@@ -239,7 +242,7 @@ export default function TermsPage() {
             <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
           </div>
 
-          <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-[1.1]">
+          <h1 className={`hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight leading-[1.1]`}>
             Terms & Conditions
           </h1>
 
@@ -248,13 +251,13 @@ export default function TermsPage() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8">
-            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-100">
+            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} ${dark ? 'border-white/8' : 'border-gray-100'}">
               <span className="text-[11px] font-medium text-gray-500">Fair Terms</span>
             </div>
-            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-100">
+            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} ${dark ? 'border-white/8' : 'border-gray-100'}">
               <span className="text-[11px] font-medium text-gray-500">Secure Transactions</span>
             </div>
-            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-50 border border-gray-100">
+            <div className="hero-meta flex items-center gap-2 px-3 py-1.5 rounded-full ${dark ? 'bg-[#1E1E1E]' : 'bg-gray-50'} ${dark ? 'border-white/8' : 'border-gray-100'}">
               <span className="text-[11px] font-medium text-gray-500">Transparent Policies</span>
             </div>
           </div>
@@ -273,10 +276,10 @@ export default function TermsPage() {
               const hasDetails = section.details && section.details.length > 0;
               return (
                 <div key={i} id={`section-${i}`} className="terms-section scroll-mt-24 mb-8 sm:mb-10">
-                  <div className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-7 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow duration-500">
+                  <div className={`${dark ? 'bg-[#141414]' : 'bg-white'} rounded-2xl ${dark ? 'border-white/8' : 'border-gray-100'} p-5 sm:p-7 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow duration-500`}>
                     <div className="mb-4 sm:mb-5">
                       <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-300">Section {String(i + 1).padStart(2, "0")}</span>
-                      <h2 className="text-base sm:text-lg font-bold text-gray-900 tracking-tight mt-0.5">{section.title}</h2>
+                      <h2 className={`text-base sm:text-lg font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight mt-0.5`}>{section.title}</h2>
                     </div>
 
                     <p className="text-sm text-gray-500 leading-relaxed mb-4 sm:mb-5">{section.content}</p>
@@ -284,8 +287,8 @@ export default function TermsPage() {
                     {hasDetails && (
                       <div className="space-y-2">
                         {section.details.map((detail, j) => (
-                          <div key={j} className="detail-item flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-gray-50/70 hover:bg-gray-50 transition-colors duration-300 group">
-                            <span className="text-xs sm:text-[13px] text-gray-600 leading-relaxed">{detail}</span>
+                          <div key={j} className={`detail-item flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl ${dark ? 'bg-[#1E1E1E]/70' : 'bg-gray-50/70'} ${dark ? 'hover:bg-[#1E1E1E]' : 'hover:bg-gray-50'} transition-colors duration-300 group`}>
+                            <span className={`text-xs sm:text-[13px] ${dark ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}>{detail}</span>
                           </div>
                         ))}
                       </div>
@@ -309,8 +312,8 @@ export default function TermsPage() {
             </div>
 
             {/* Contact CTA */}
-            <div className="footer-cta bg-gradient-to-br from-gray-50 to-gray-100/50 rounded-2xl border border-gray-100 p-6 sm:p-8 text-center">
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight mb-2">Questions About These Terms?</h3>
+            <div className={`footer-cta ${dark ? 'bg-[#1E1E1E]' : 'bg-gradient-to-br from-gray-50 to-gray-100/50'} rounded-2xl ${dark ? 'border-white/8' : 'border-gray-100'} p-6 sm:p-8 text-center`}>
+              <h3 className={`text-lg sm:text-xl font-bold ${dark ? 'text-white' : 'text-gray-900'} tracking-tight mb-2`}>Questions About These Terms?</h3>
               <p className="text-sm text-gray-400 max-w-md mx-auto mb-5 leading-relaxed">
                 If you have any questions about these Terms and Conditions, please contact us and we will be happy to help.
               </p>
@@ -323,7 +326,7 @@ export default function TermsPage() {
                 </a>
                 <Link
                   to="/"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 text-sm font-semibold rounded-xl border border-gray-200 hover:border-gray-300 hover:text-gray-900 transition-all duration-300 hover:-translate-y-0.5"
+                  className={`inline-flex items-center gap-2 px-5 py-2.5 ${dark ? 'bg-[#141414]' : 'bg-white'} ${dark ? 'text-gray-300' : 'text-gray-700'} text-sm font-semibold rounded-xl ${dark ? 'border-white/12' : 'border-gray-200'} hover:border-gray-300 hover:text-gray-900 transition-all duration-300 hover:-translate-y-0.5`}
                 >
                   Back to Home
                 </Link>

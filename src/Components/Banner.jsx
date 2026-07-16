@@ -1,7 +1,9 @@
 import React from "react";
 import bannerImage from "../assets/8.jpg";
+import { useTheme } from '../App';
 
 export default function Banner() {
+  const { dark } = useTheme();
   return (
     <section className="banner-section">
       <img

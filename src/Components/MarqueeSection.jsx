@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from '../App';
 
 export default function LineTextHeading({
   text = "NOVA DRIVE",
@@ -6,6 +7,7 @@ export default function LineTextHeading({
   lineGap = 4,         // gap between lines (px)
   speed = 22,          // seconds per loop — higher = slower
 }) {
+  const { dark } = useTheme();
   return (
     <section className="line-text-section">
       <div className="line-text-marquee">
