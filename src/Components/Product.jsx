@@ -14,11 +14,11 @@ import img5 from "../assets/product.png";
 
 
 const productImages = {
-  "32GB": image32,
-  "64GB": image64,
-  "128GB": image128,
-  "16GB": image32,
-  "256GB": image64,
+  "32GB": img5,
+  "64GB": img5,
+  "128GB": img5,
+  "16GB": img5,
+  "256GB": img5,
 };
 
 const product = {
