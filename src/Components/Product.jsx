@@ -10,6 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 import image32 from "../assets/WhatsApp Image 2026-07-11 at 5.07.56 PM (1).jpeg";
 import image64 from "../assets/WhatsApp Image 2026-07-11 at 5.07.56 PM.jpeg";
 import image128 from "../assets/WhatsApp Image 2026-07-11 at 5.13.54 PM.jpeg";
+import img5 from "../assets/product.png";
+
 
 const productImages = {
   "32GB": image32,
