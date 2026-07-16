@@ -163,8 +163,8 @@ export default function ContactSection() {
   ${dark ? 'border border-white/20' : 'border border-neutral-700'}
   font-medium text-sm uppercase tracking-[0.18em]
   transition-all duration-300 ease-out
-  ${dark ? 'hover:bg-gray-200 hover:border-white/40' : 'hover:bg-neutral-900 hover:border-neutral-500'}
-  hover:shadow-[0_10px_30px_rgba(0,0,0,0.35)]
+  hover:bg-[#FF5A1F] hover:text-white hover:border-[#FF5A1F]
+  hover:shadow-[0_10px_30px_rgba(255,90,31,0.35)]
   hover:-translate-y-1
   active:translate-y-0 active:scale-95
   group cursor-pointer`}
