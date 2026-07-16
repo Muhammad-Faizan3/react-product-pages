@@ -23,6 +23,7 @@ import PrivacyPolicy from './Components/PrivacyPolicy'
 import TermsPage from './Components/TermsPage'
 import ShippingPolicy from './Components/ShippingPolicy'
 import FAQPage from './Components/FAQPage'
+import VideoShowcase from './Components/VideoShowcase'
 
 const ThemeContext = createContext()
 
@@ -160,6 +161,7 @@ function ProductPage() {
       <StickySlideSection />
       <ProductGallery />
       <ProductSection />
+      <VideoShowcase />
       <WhenToUse />
       <ContactSection />
     </>
