@@ -156,19 +156,18 @@ export default function ContactSection() {
 
                   <div ref={(el) => (inputRefs.current[6] = el)}>
                     <button
-  className="mt-6 inline-flex items-center justify-center gap-3
+  className={`mt-6 inline-flex items-center justify-center gap-3
   px-8 py-3.5
-  bg-black text-white
+  ${dark ? 'bg-white text-black' : 'bg-black text-white'}
   rounded-xl
-  border border-neutral-700
+  ${dark ? 'border border-white/20' : 'border border-neutral-700'}
   font-medium text-sm uppercase tracking-[0.18em]
   transition-all duration-300 ease-out
-  hover:bg-neutral-900
-  hover:border-neutral-500
+  ${dark ? 'hover:bg-gray-200 hover:border-white/40' : 'hover:bg-neutral-900 hover:border-neutral-500'}
   hover:shadow-[0_10px_30px_rgba(0,0,0,0.35)]
   hover:-translate-y-1
   active:translate-y-0 active:scale-95
-  group"
+  group cursor-pointer`}
 >
   <PhoneCall
     size={18}
