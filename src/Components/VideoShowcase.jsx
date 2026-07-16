@@ -3,24 +3,34 @@ import React, { useRef, useState, useEffect, useCallback } from "react";
 export default function VideoShowcase({
   topText = "INERTIA",
   bottomText = "STUDIOS",
-  videoSrc = "/your-video.mp4", // <-- replace with your actual video file path/URL
+  videoSrc = "/your-video.mp4",
+  scrollLengthVh = 300,
 }) {
   const sectionRef = useRef(null);
-  const [progress, setProgress] = useState(0); // 0 = small video, 1 = fullscreen video
+  const [progress, setProgress] = useState(0);
+  const [phase, setPhase] = useState("before");
 
   const updateProgress = useCallback(() => {
     const el = sectionRef.current;
     if (!el) return;
 
     const rect = el.getBoundingClientRect();
-    const scrollableHeight = el.offsetHeight - window.innerHeight;
+    const vh = window.innerHeight;
+    const scrollableHeight = el.offsetHeight - vh;
 
     if (scrollableHeight <= 0) return;
 
-    // How far we've scrolled into the section (0 at top, 1 at bottom)
-    const raw = -rect.top / scrollableHeight;
-    const clamped = Math.min(1, Math.max(0, raw));
-    setProgress(clamped);
+    if (rect.top > 0) {
+      setPhase("before");
+      setProgress(0);
+    } else if (rect.bottom < vh) {
+      setPhase("after");
+      setProgress(1);
+    } else {
+      setPhase("pinned");
+      const raw = -rect.top / scrollableHeight;
+      setProgress(Math.min(1, Math.max(0, raw)));
+    }
   }, []);
 
   useEffect(() => {
@@ -45,8 +55,6 @@ export default function VideoShowcase({
     };
   }, [updateProgress]);
 
-  // Base video size is a wide rectangle (like the reference), blended smoothly
-  // toward a true fullscreen 100vw x 100vh box as the user scrolls.
   const baseWidthVmin = 40;
   const baseHeightVmin = 23;
 
@@ -58,11 +66,22 @@ export default function VideoShowcase({
   const containerPadding = `${40 * (1 - progress)}px ${48 * (1 - progress)}px`;
   const gap = `${16 * (1 - progress)}px`;
 
+  const stageStyle =
+    phase === "before"
+      ? { position: "absolute", top: 0, left: 0 }
+      : phase === "after"
+      ? { position: "absolute", bottom: 0, left: 0 }
+      : { position: "fixed", top: 0, left: 0 };
+
   return (
-    <section ref={sectionRef} className="scroll-video-section">
+    <section
+      ref={sectionRef}
+      className="scroll-video-section"
+      style={{ height: `${scrollLengthVh}vh` }}
+    >
       <div
-        className="scroll-video-sticky"
-        style={{ padding: containerPadding, gap }}
+        className="scroll-video-stage"
+        style={{ ...stageStyle, padding: containerPadding, gap }}
       >
         <h1
           className="scroll-video-heading heading-top"
@@ -101,13 +120,11 @@ export default function VideoShowcase({
         .scroll-video-section {
           position: relative;
           width: 100%;
-          height: 250vh; /* extra height gives scroll room to drive the animation */
           background: #ffffff;
+          will-change: auto !important;
         }
 
-        .scroll-video-sticky {
-          position: sticky;
-          top: 0;
+        .scroll-video-stage {
           width: 100%;
           height: 100vh;
           overflow: hidden;
@@ -116,6 +133,7 @@ export default function VideoShowcase({
           align-items: center;
           justify-content: center;
           box-sizing: border-box;
+          z-index: 50;
         }
 
         .scroll-video-heading {

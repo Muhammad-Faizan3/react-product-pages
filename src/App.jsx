@@ -157,11 +157,11 @@ function ProductPage() {
       <MarqueeSection />
       <Banner />
       <Product />
+      <VideoShowcase />
       <FeatureHighlight />
       <StickySlideSection />
       <ProductGallery />
       <ProductSection />
-      <VideoShowcase />
       <WhenToUse />
       <ContactSection />
     </>

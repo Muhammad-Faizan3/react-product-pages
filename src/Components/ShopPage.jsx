@@ -238,6 +238,7 @@ function FilterGroup({ section, selected, onToggle }) {
 
 /* ── Price Range Slider ── */
 function PriceRange({ range, setRange }) {
+  const { dark } = useTheme();
   return (
     <div className={`border-b ${dark ? 'border-white/8' : 'border-gray-100'} pb-4`}>
       <p className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'} mb-3`}>Price Range</p>
@@ -309,6 +310,7 @@ function RatingFilter({ minRating, setMinRating }) {
 
 /* ── Availability Filter ── */
 function AvailabilityFilter({ inStockOnly, setInStockOnly }) {
+  const { dark } = useTheme();
   return (
     <div className={`border-b ${dark ? 'border-white/8' : 'border-gray-100'} pb-4`}>
       <p className={`text-sm font-semibold ${dark ? 'text-white' : 'text-gray-900'} mb-3`}>Availability</p>
@@ -392,7 +394,7 @@ function ProductCard({ product, index }) {
       className={`group relative ${dark ? 'bg-[#0A0A0A]' : 'bg-white'} rounded-2xl border ${dark ? 'border-white/8' : 'border-gray-100'} overflow-hidden`}
     >
       <div className="absolute top-3 left-3 z-10">
-        <span className="bg-black text-white text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider px-2 sm:px-3 py-1 rounded-full">
+        <span className="shop-badge-dark bg-black text-white text-[8px] sm:text-[10px] font-semibold uppercase tracking-wider px-2 sm:px-3 py-1 rounded-full">
           {product.badge}
         </span>
       </div>
@@ -441,7 +443,7 @@ function ProductCard({ product, index }) {
         <div className="flex gap-2 mt-2 sm:mt-4 md:mt-5">
           <button
             onClick={handleAddToCart}
-            className="flex-1 h-9 sm:h-10 md:h-12 rounded-xl bg-black text-white text-[10px] sm:text-xs md:text-sm font-semibold flex items-center justify-center gap-1.5 sm:gap-2 relative overflow-hidden transition-all duration-300 hover:bg-[#FF5A1F] hover:shadow-[0_8px_30px_rgba(255,90,31,0.25)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+            className="shop-btn-dark flex-1 h-9 sm:h-10 md:h-12 rounded-xl bg-black text-white text-[10px] sm:text-xs md:text-sm font-semibold flex items-center justify-center gap-1.5 sm:gap-2 relative overflow-hidden transition-all duration-300 hover:bg-[#FF5A1F] hover:shadow-[0_8px_30px_rgba(255,90,31,0.25)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
           >
             <ShoppingBag size={14} className="sm:text-base" />
             <span className="hidden xs:inline">Add to Cart</span>
@@ -609,7 +611,7 @@ export default function ShopPage() {
               placeholder="Search products..."
               className={`w-full h-10 sm:h-11 md:h-12 pl-4 sm:pl-5 pr-10 sm:pr-12 rounded-xl border-2 ${dark ? 'border-white/12' : 'border-gray-200'} ${dark ? 'bg-[#141414]' : 'bg-gray-50'} text-sm ${dark ? 'text-white' : 'text-gray-900'} placeholder-gray-400 outline-none transition-all duration-300 focus:border-black ${dark ? 'focus:bg-[#1A1A1A]' : 'focus:bg-white'} focus:shadow-[0_4px_20px_rgba(0,0,0,0.08)]`}
             />
-            <button className="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-lg bg-black flex items-center justify-center hover:bg-[#FF5A1F] transition-all duration-300 cursor-pointer">
+            <button className="shop-search-dark absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-lg bg-black flex items-center justify-center hover:bg-[#FF5A1F] transition-all duration-300 cursor-pointer">
               <Search size={14} className="sm:text-base text-white" />
             </button>
           </div>
@@ -624,7 +626,7 @@ export default function ShopPage() {
             <SlidersHorizontal size={14} className="sm:text-base" />
             <span>Filters</span>
             {activeFilterCount > 0 && (
-              <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-black text-white text-[8px] sm:text-[10px] flex items-center justify-center">
+              <span className="shop-badge-dark w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-black text-white text-[8px] sm:text-[10px] flex items-center justify-center">
                 {activeFilterCount}
               </span>
             )}
@@ -648,7 +650,7 @@ export default function ShopPage() {
                   <button
                     key={opt.value}
                     onClick={() => { setSortBy(opt.value); setSortOpen(false); }}
-                    className={`w-full text-left px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm transition-colors cursor-pointer ${
+                    className={`shop-sort-mobile w-full text-left px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm transition-colors cursor-pointer ${
                       sortBy === opt.value
                         ? "bg-black text-white font-semibold"
                         : dark ? "text-gray-400 hover:bg-[#141414]" : "text-gray-600 hover:bg-gray-50"
@@ -682,7 +684,7 @@ export default function ShopPage() {
             <SlidersHorizontal size={16} className={`transition-transform duration-300 ${filterOpen ? "rotate-180" : ""}`} />
             {filterOpen ? "Hide Filters" : "Show Filters"}
             {activeFilterCount > 0 && (
-              <span className="w-5 h-5 rounded-full bg-black text-white text-[10px] flex items-center justify-center">
+              <span className="shop-badge-dark w-5 h-5 rounded-full bg-black text-white text-[10px] flex items-center justify-center">
                 {activeFilterCount}
               </span>
             )}
@@ -728,19 +730,19 @@ export default function ShopPage() {
                     <button
                       key={opt.value}
                       onClick={() => setSortBy(opt.value)}
-                      className={`w-full flex items-center gap-2.5 py-2 px-2.5 rounded-lg text-sm transition-all cursor-pointer ${
+                      className={`shop-sort-dark w-full flex items-center gap-2.5 py-2 px-2.5 rounded-lg text-sm transition-all cursor-pointer ${
                         sortBy === opt.value
                           ? "bg-black text-white font-semibold"
                           : dark ? "text-gray-400 hover:bg-[#141414] hover:text-white" : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                       }`}
                     >
                       <span
-                        className={`w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                        className={`sort-dot w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                           sortBy === opt.value ? "border-white" : "border-gray-300"
                         }`}
                       >
                         {sortBy === opt.value && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                          <span className="sort-dot-inner w-1.5 h-1.5 rounded-full bg-white" />
                         )}
                       </span>
                       {opt.label}
@@ -816,7 +818,7 @@ export default function ShopPage() {
                 </p>
                 <button
                   onClick={clearAll}
-                  className="mt-4 sm:mt-5 px-5 sm:px-6 py-2 sm:py-2.5 rounded-xl bg-black text-white text-xs sm:text-sm font-semibold hover:bg-[#FF5A1F] transition-all duration-300 cursor-pointer"
+                  className="shop-clear-btn mt-4 sm:mt-5 px-5 sm:px-6 py-2 sm:py-2.5 rounded-xl bg-black text-white text-xs sm:text-sm font-semibold hover:bg-[#FF5A1F] transition-all duration-300 cursor-pointer"
                 >
                   Clear All Filters
                 </button>
@@ -832,6 +834,49 @@ export default function ShopPage() {
           </button>
         </div>
       </div>
+
+      <style>{`
+        .dark .shop-btn-dark {
+          background-color: #fff !important;
+          color: #000 !important;
+        }
+        .dark .shop-btn-dark:hover {
+          background-color: #FF5A1F !important;
+          color: #fff !important;
+        }
+        .dark .shop-badge-dark {
+          background-color: #fff !important;
+          color: #000 !important;
+        }
+        .dark .shop-search-dark {
+          background-color: #fff !important;
+        }
+        .dark .shop-search-dark svg {
+          color: #000 !important;
+        }
+        .dark .shop-sort-dark {
+          background-color: #fff !important;
+          color: #000 !important;
+        }
+        .dark .shop-sort-dark .sort-dot {
+          border-color: #000 !important;
+        }
+        .dark .shop-sort-dark .sort-dot-inner {
+          background-color: #000 !important;
+        }
+        .dark .shop-sort-mobile {
+          background-color: #fff !important;
+          color: #000 !important;
+        }
+        .dark .shop-clear-btn {
+          background-color: #fff !important;
+          color: #000 !important;
+        }
+        .dark .shop-clear-btn:hover {
+          background-color: #FF5A1F !important;
+          color: #fff !important;
+        }
+      `}</style>
 
       {/* Mobile Filter Drawer */}
       {mobileFilter && (
@@ -861,19 +906,19 @@ export default function ShopPage() {
                     <button
                       key={opt.value}
                       onClick={() => setSortBy(opt.value)}
-                      className={`w-full flex items-center gap-2.5 py-2 px-2.5 rounded-lg text-sm transition-all cursor-pointer ${
+                      className={`shop-sort-dark w-full flex items-center gap-2.5 py-2 px-2.5 rounded-lg text-sm transition-all cursor-pointer ${
                         sortBy === opt.value
                           ? "bg-black text-white font-semibold"
                           : dark ? "text-gray-400 hover:bg-[#141414] hover:text-white" : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                       }`}
                     >
                       <span
-                        className={`w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                        className={`sort-dot w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                           sortBy === opt.value ? "border-white" : "border-gray-300"
                         }`}
                       >
                         {sortBy === opt.value && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-white" />
+                          <span className="sort-dot-inner w-1.5 h-1.5 rounded-full bg-white" />
                         )}
                       </span>
                       {opt.label}
@@ -892,7 +937,7 @@ export default function ShopPage() {
                 )}
                 <button
                   onClick={() => setMobileFilter(false)}
-                  className="flex-1 py-2.5 sm:py-3 rounded-xl bg-black text-white text-xs sm:text-sm font-semibold hover:bg-[#FF5A1F] transition-all cursor-pointer"
+                  className="shop-btn-dark flex-1 py-2.5 sm:py-3 rounded-xl bg-black text-white text-xs sm:text-sm font-semibold hover:bg-[#FF5A1F] transition-all cursor-pointer"
                 >
                   Show {filteredProducts.length} Results
                 </button>

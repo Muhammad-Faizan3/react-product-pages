@@ -678,6 +678,18 @@ export default function Product() {
               </button>
             </div>
 
+            {/* Brochure Info */}
+            <div className="pt-2">
+              <p className={`text-[16px] font-bold leading-relaxed ${dark ? 'text-gray-300' : 'text-[#1a1410]'}`}>
+                Detailed product specifications and technical information are available in our product brochure.
+              </p>
+              <button
+                className="brochure-btn mt-3 px-6 py-2.5 rounded-xl text-[14px] font-semibold transition-all duration-300 cursor-pointer"
+              >
+                Detailed Brochure
+              </button>
+            </div>
+
             {/* Feature Cards - Glass style */}
             <div className="grid grid-cols-2 gap-2 pt-2">
               {product.features.map(({ icon: Icon, label }, i) => (
@@ -751,6 +763,26 @@ export default function Product() {
         html.dark .add-to-cart-btn:active:not(:disabled):not(.bg-green-500) {
           background: #fff;
           color: #000;
+        }
+
+        .brochure-btn {
+          background: #000;
+          color: #fff;
+        }
+
+        .brochure-btn:hover {
+          background: #e8572a;
+          color: #fff;
+        }
+
+        html.dark .brochure-btn {
+          background: #fff;
+          color: #000;
+        }
+
+        html.dark .brochure-btn:hover {
+          background: #e8572a;
+          color: #fff;
         }
       `}</style>
     </section>
